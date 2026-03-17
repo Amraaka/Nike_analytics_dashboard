@@ -1,6 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { Clock3, Eye, Users, UserRoundCog } from "lucide-react";
+import StaffingPieChart from "./StaffingPieChart";
 
 /* ── Types ─────────────────────────────────────────────────────── */
 
@@ -123,16 +124,13 @@ export default async function DashboardPage() {
     read<VisitorData>("visitor_distribution_hourly_20260316.json"),
   ]);
 
-  const activeHours = staffing.hours.filter(
-    (h) => h.staffed_seconds > 0 || h.unstaffed_seconds > 0
-  );
   const peakHour = visitors.hourly_average.reduce((a, b) =>
     b.avg_count_raw > a.avg_count_raw ? b : a
   );
-  const topZone = [...visitors.zone_average].sort(
-    (a, b) => b.total_count - a.total_count
-  )[0];
-  const maxBucket = Math.max(...dwell.buckets.map((b) => b.total_count), 1);
+  const maxCustomerBucket = Math.max(
+    ...dwell.buckets.map((b) => b.customer_count),
+    1
+  );
   const maxZoneHour = Math.max(
     ...visitors.zone_hour.map((e) => e.avg_count_raw),
     1
@@ -153,9 +151,9 @@ export default async function DashboardPage() {
     cam3: "#0e7490", // cyan-700
   };
   const CAM_LABEL: Record<string, string> = {
-    cam1: "cam1",
-    cam2: "Tek",
-    cam3: "Zuun-urd",
+    cam1: "Дотор заал",
+    cam2: "Касс",
+    cam3: "Зүүн урд камер",
   };
   const CHART_H = 192; // px — matches h-48
   // For stacked bars, max is the highest per-hour sum across cameras
@@ -178,22 +176,22 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-6">
       {/* ═══════════ TOP: Average / Summary Metric Cards ═══════════ */}
-      <section className="grid gap-4 grid-cols-2 lg:grid-cols-4">
+      <section className="grid gap-3 grid-cols-2 lg:grid-cols-3">
         {[
+          // {
+          //   label: "Дундаж үйлчлүүлэгч",
+          //   value: visitors.summary.overall_avg_count_raw.toFixed(2),
+          //   sub: `${numFmt.format(visitors.summary.total_count)} нийт илрүүлэлт`,
+          //   Icon: Users,
+          // },
           {
-            label: "Дундаж үйлчлүүлэгч",
-            value: visitors.summary.overall_avg_count_raw.toFixed(2),
-            sub: `${numFmt.format(visitors.summary.total_count)} нийт илрүүлэлт`,
-            Icon: Users,
-          },
-          {
-            label: "Сааталтын медиан",
-            value: fmtDur(dwell.summary_by_role.all.p50_seconds),
-            sub: `Үйлчлүүлэгч ${fmtDur(dwell.summary_by_role.customer.p50_seconds)} · Ажилтан ${fmtDur(dwell.summary_by_role.worker.p50_seconds)}`,
+            label: "Үйлчлүүлсэн дундаж хугацаа",
+            value: fmtDur(dwell.summary_by_role.customer.p50_seconds),
+            // sub: `Үйлчлүүлэгч ${fmtDur(dwell.summary_by_role.customer.p50_seconds) }`,
             Icon: Clock3,
           },
           {
-            label: "Тек хүнтэй байсан хувь",
+            label: "Касс хүнтэй байсан %",
             value: `${staffing.summary.staffed_percent.toFixed(1)}%`,
             sub: `${fmtDur(staffing.summary.total_staffed_seconds)} ажилтантай / ${fmtDur(staffing.summary.total_unstaffed_seconds)} ажилтангүй`,
             Icon: UserRoundCog,
@@ -201,7 +199,7 @@ export default async function DashboardPage() {
           {
             label: "Оргил цаг",
             value: peakHour.hour,
-            sub: `${peakHour.avg_count_raw.toFixed(2)} дундаж · ${numFmt.format(peakHour.total_count)} нийт`,
+            sub: `${peakHour.avg_count_raw.toFixed(2)} дундаж`,
             Icon: Eye,
           },
         ].map((c) => (
@@ -226,8 +224,8 @@ export default async function DashboardPage() {
       {/* ═══════════ GRAPHS / DISTRIBUTIONS ════════════════════════ */}
 
       {/* ── 1. Hourly Visitor Bar Chart (stacked by camera) ────── */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <div className="flex items-center justify-between mb-1">
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <div className="flex items-center justify-between mb-12">
           <h2 className="text-base font-semibold text-slate-900">
             Цаг тутмын дундаж үйлчлүүлэгчийн тархалт (камерын бүсээр)
           </h2>
@@ -245,9 +243,6 @@ export default async function DashboardPage() {
             ))}
           </div>
         </div>
-        <p className="mb-4 text-xs text-slate-500">
-          Камерын бүс бүрээр, цаг тутам кадр тутмын үйлчлүүлэгчийн дундаж тоо.
-        </p>
         <div className="relative flex h-48 items-end gap-1">
           {visitors.hours.map((hr) => {
             const segments = cameras.map((cam) => ({
@@ -289,61 +284,22 @@ export default async function DashboardPage() {
         </div>
       </section>
 
-      {/* ── 2. Staffing Coverage by Hour ───────────────────────── */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="text-base font-semibold text-slate-900">
-          Цагийн ажилтны хамралт
-        </h2>
-        <p className="mb-4 text-xs text-slate-500">
-          Үйл ажиллагааны цаг бүрийн ажилтантай байсан хувь (ногоон &ge; 60%, шар &ge; 40%, улаан &lt; 40%).
-        </p>
-        <div className="relative flex h-48 items-end gap-1">
-          {activeHours.map((h) => {
-            const barH = Math.max((h.staffed_percent / 100) * CHART_H, 6);
-            const color =
-              h.staffed_percent >= 60
-                ? "#10b981" // emerald-500
-                : h.staffed_percent >= 40
-                  ? "#fbbf24" // amber-400
-                  : "#f43f5e"; // rose-500
-            return (
-              <div
-                key={h.hour}
-                className="group relative flex flex-1 flex-col items-center justify-end"
-              >
-                <div
-                  className="w-full rounded-t transition-colors"
-                  style={{ height: `${barH}px`, backgroundColor: color }}
-                />
-                <span className="absolute -top-6 hidden group-hover:block text-[10px] bg-slate-800 text-white rounded px-1.5 py-0.5 whitespace-nowrap">
-                  {h.hour} · {h.staffed_percent.toFixed(1)}%
-                </span>
-                <span className="mt-1 text-[10px] text-slate-400">
-                  {h.hour.slice(0, 2)}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+      {/* ── 2. Staffing Coverage (Pie Chart) ────────────────────── */}
+      <StaffingPieChart staffing={staffing} />
 
-      {/* ── 3. Dwell Duration Distribution ─────────────────────── */}
+      {/* ── 3. Dwell Duration Distribution (Customer only) ───────── */}
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <h2 className="text-base font-semibold text-slate-900">
-          Сааталтын хугацааны тархалт
+          Үйлчлүүлэгчийн хугацааны тархалт
         </h2>
         <p className="mb-4 text-xs text-slate-500">
-          Хугацааны ангилал бүрт үйлчлүүлэгч (цэнхэр) ба ажилтан (саарал)-ы тоо.
+          Хугацааны ангилал бүрт үйлчлүүлэгчийн тоо.
         </p>
         <div className="space-y-2">
           {dwell.buckets
-            .filter((b) => b.total_count > 0)
+            .filter((b) => b.customer_count > 0)
             .map((b) => {
-              const w = (b.total_count / maxBucket) * 100;
-              const custPct =
-                b.total_count > 0
-                  ? (b.customer_count / b.total_count) * 100
-                  : 0;
+              const w = (b.customer_count / maxCustomerBucket) * 100;
               return (
                 <div key={b.bucket} className="flex items-center gap-3">
                   <span className="w-20 shrink-0 text-xs font-medium text-slate-600 text-right">
@@ -351,21 +307,13 @@ export default async function DashboardPage() {
                   </span>
                   <div className="flex-1">
                     <div
-                      className="flex h-5 overflow-hidden rounded"
+                      className="flex h-5 overflow-hidden rounded bg-cyan-500"
                       style={{ width: `${Math.max(w, 2)}%` }}
-                    >
-                      {b.customer_count > 0 && (
-                        <div
-                          className="h-full bg-cyan-500"
-                          style={{ width: `${custPct}%` }}
-                        />
-                      )}
-                      <div className="h-full flex-1 bg-slate-300" />
-                    </div>
+                    />
                   </div>
-                  <span className="w-16 shrink-0 text-xs text-slate-500 text-right">
-                    {numFmt.format(b.total_count)}
-                  </span>
+                  {/* <span className="w-16 shrink-0 text-xs text-slate-500 text-right">
+                    {numFmt.format(b.customer_count)}
+                  </span> */}
                 </div>
               );
             })}
@@ -375,10 +323,10 @@ export default async function DashboardPage() {
       {/* ── 4. Camera Zone Heatmap ─────────────────────────────── */}
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm overflow-x-auto">
         <h2 className="text-base font-semibold text-slate-900">
-          Бүс × Цагийн дулааны зураг
+          Тархалт
         </h2>
         <p className="mb-4 text-xs text-slate-500">
-          Камерын бүс болон цагаар тооцсон үйлчлүүлэгчийн дундаж нягт.
+          Худалдан авагчийн Дундаж тархалт
         </p>
         <table className="w-full border-separate border-spacing-1 text-xs">
           <thead>
@@ -427,7 +375,7 @@ export default async function DashboardPage() {
       </section>
 
       {/* ── 5. Zone Totals ─────────────────────────────────────── */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      {/* <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <h2 className="text-base font-semibold text-slate-900">
           Бүсийн хураангуй
         </h2>
@@ -461,16 +409,13 @@ export default async function DashboardPage() {
               );
             })}
         </div>
-      </section>
+      </section> */}
 
       {/* ── 6. Dwell Percentiles by Role ───────────────────────── */}
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <h2 className="text-base font-semibold text-slate-900">
-          Үүргээрх сааталтын перцентил
+          Дундаж үйлчлүүлсэн хугацаа
         </h2>
-        <p className="mb-4 text-xs text-slate-500">
-          Үүрэг бүрийн хамгийн бага / медиан / p90 / p95 / хамгийн их утга.
-        </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -478,14 +423,14 @@ export default async function DashboardPage() {
                 <th className="py-2 pr-4">Үүрэг</th>
                 <th className="py-2 pr-4 text-right">Тоо</th>
                 <th className="py-2 pr-4 text-right">Хамгийн бага</th>
-                <th className="py-2 pr-4 text-right">Медиан</th>
-                <th className="py-2 pr-4 text-right">p90</th>
-                <th className="py-2 pr-4 text-right">p95</th>
+                <th className="py-2 pr-4 text-right">Дундаж</th>
+                <th className="py-2 pr-4 text-right">10%</th>
+                <th className="py-2 pr-4 text-right">5%</th>
                 <th className="py-2 text-right">Хамгийн их</th>
               </tr>
             </thead>
             <tbody>
-              {(["customer", "worker", "all"] as const).map((role) => {
+              {(["customer"] as const).map((role) => {
                 const d = dwell.summary_by_role[role];
                 return (
                   <tr

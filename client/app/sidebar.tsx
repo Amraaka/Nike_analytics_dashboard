@@ -45,8 +45,8 @@ export default function Sidebar() {
         id="sidebar-nav"
         className={`
           ${open ? 'translate-x-0' : '-translate-x-full'}
-          fixed md:static z-40 top-0 left-0 h-full w-64 max-w-full bg-white border-r border-slate-200 transition-transform duration-200 md:translate-x-0 flex flex-col
-          md:w-56 md:translate-x-0
+          fixed z-40 top-0 left-0 h-screen w-64 max-w-full bg-white border-r border-slate-200 transition-transform duration-200 md:translate-x-0 flex flex-col
+          md:w-56
         `}
         style={{ minWidth: open ? 220 : undefined }}
         tabIndex={-1}
