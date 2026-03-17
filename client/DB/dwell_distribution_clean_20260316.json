@@ -1,0 +1,141 @@
+{
+  "source_file": "DB/dwell_20260316.csv",
+  "generated_at_utc": "2026-03-17T04:08:52.342395+00:00",
+  "filters": {
+    "duration_source": "reported_dwell_seconds_if_close_else_recomputed_from_times",
+    "mismatch_tolerance_seconds": 5.0,
+    "min_dwell_seconds": 3.0,
+    "max_dwell_seconds": 3600.0
+  },
+  "quality": {
+    "input_rows": 6593,
+    "rows_used_for_distribution": 4375,
+    "rows_removed": 2218,
+    "recomputed_duration_rows": 0,
+    "removed_by_reason": {
+      "invalid_role": 0,
+      "time_parse_error": 0,
+      "non_positive_duration": 0,
+      "below_min_dwell": 0,
+      "above_max_dwell": 2218
+    }
+  },
+  "summary_by_role": {
+    "customer": {
+      "count": 111,
+      "min_seconds": 407.8,
+      "p50_seconds": 1120.7,
+      "p90_seconds": 2824.0,
+      "p95_seconds": 3262.25,
+      "max_seconds": 3594.7
+    },
+    "worker": {
+      "count": 4264,
+      "min_seconds": 3.5,
+      "p50_seconds": 903.5,
+      "p90_seconds": 2338.27,
+      "p95_seconds": 3106.64,
+      "max_seconds": 3595.8
+    },
+    "all": {
+      "count": 4375,
+      "min_seconds": 3.5,
+      "p50_seconds": 905.9,
+      "p90_seconds": 2345.4,
+      "p95_seconds": 3109.63,
+      "max_seconds": 3595.8
+    }
+  },
+  "buckets": [
+    {
+      "bucket": "0-30s",
+      "min_seconds": 0.0,
+      "max_seconds": 30.0,
+      "customer_count": 0,
+      "worker_count": 646,
+      "total_count": 646,
+      "pct_of_used_rows": 14.77
+    },
+    {
+      "bucket": "30-60s",
+      "min_seconds": 30.0,
+      "max_seconds": 60.0,
+      "customer_count": 0,
+      "worker_count": 383,
+      "total_count": 383,
+      "pct_of_used_rows": 8.75
+    },
+    {
+      "bucket": "1-2min",
+      "min_seconds": 60.0,
+      "max_seconds": 120.0,
+      "customer_count": 0,
+      "worker_count": 275,
+      "total_count": 275,
+      "pct_of_used_rows": 6.29
+    },
+    {
+      "bucket": "2-3min",
+      "min_seconds": 120.0,
+      "max_seconds": 180.0,
+      "customer_count": 0,
+      "worker_count": 82,
+      "total_count": 82,
+      "pct_of_used_rows": 1.87
+    },
+    {
+      "bucket": "3-5min",
+      "min_seconds": 180.0,
+      "max_seconds": 300.0,
+      "customer_count": 0,
+      "worker_count": 75,
+      "total_count": 75,
+      "pct_of_used_rows": 1.71
+    },
+    {
+      "bucket": "5-10min",
+      "min_seconds": 300.0,
+      "max_seconds": 600.0,
+      "customer_count": 4,
+      "worker_count": 112,
+      "total_count": 116,
+      "pct_of_used_rows": 2.65
+    },
+    {
+      "bucket": "10-15min",
+      "min_seconds": 600.0,
+      "max_seconds": 900.0,
+      "customer_count": 27,
+      "worker_count": 535,
+      "total_count": 562,
+      "pct_of_used_rows": 12.85
+    },
+    {
+      "bucket": "15-30min",
+      "min_seconds": 900.0,
+      "max_seconds": 1800.0,
+      "customer_count": 58,
+      "worker_count": 1560,
+      "total_count": 1618,
+      "pct_of_used_rows": 36.98
+    },
+    {
+      "bucket": "30-60min",
+      "min_seconds": 1800.0,
+      "max_seconds": 3600.0,
+      "customer_count": 22,
+      "worker_count": 596,
+      "total_count": 618,
+      "pct_of_used_rows": 14.13
+    },
+    {
+      "bucket": "60min+",
+      "min_seconds": 3600.0,
+      "max_seconds": null,
+      "customer_count": 0,
+      "worker_count": 0,
+      "total_count": 0,
+      "pct_of_used_rows": 0.0
+    }
+  ]
+}

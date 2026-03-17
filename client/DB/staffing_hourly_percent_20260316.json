@@ -1,0 +1,179 @@
+{
+  "source_file": "DB/counter_staffing_20260316.csv",
+  "hours": [
+    {
+      "hour": "00:00",
+      "staffed_seconds": 0.0,
+      "unstaffed_seconds": 0.0,
+      "staffed_percent": 0.0,
+      "unstaffed_percent": 0.0
+    },
+    {
+      "hour": "01:00",
+      "staffed_seconds": 0.0,
+      "unstaffed_seconds": 0.0,
+      "staffed_percent": 0.0,
+      "unstaffed_percent": 0.0
+    },
+    {
+      "hour": "02:00",
+      "staffed_seconds": 0.0,
+      "unstaffed_seconds": 0.0,
+      "staffed_percent": 0.0,
+      "unstaffed_percent": 0.0
+    },
+    {
+      "hour": "03:00",
+      "staffed_seconds": 0.0,
+      "unstaffed_seconds": 0.0,
+      "staffed_percent": 0.0,
+      "unstaffed_percent": 0.0
+    },
+    {
+      "hour": "04:00",
+      "staffed_seconds": 0.0,
+      "unstaffed_seconds": 0.0,
+      "staffed_percent": 0.0,
+      "unstaffed_percent": 0.0
+    },
+    {
+      "hour": "05:00",
+      "staffed_seconds": 0.0,
+      "unstaffed_seconds": 0.0,
+      "staffed_percent": 0.0,
+      "unstaffed_percent": 0.0
+    },
+    {
+      "hour": "06:00",
+      "staffed_seconds": 0.0,
+      "unstaffed_seconds": 0.0,
+      "staffed_percent": 0.0,
+      "unstaffed_percent": 0.0
+    },
+    {
+      "hour": "07:00",
+      "staffed_seconds": 0.0,
+      "unstaffed_seconds": 0.0,
+      "staffed_percent": 0.0,
+      "unstaffed_percent": 0.0
+    },
+    {
+      "hour": "08:00",
+      "staffed_seconds": 0.0,
+      "unstaffed_seconds": 0.0,
+      "staffed_percent": 0.0,
+      "unstaffed_percent": 0.0
+    },
+    {
+      "hour": "09:00",
+      "staffed_seconds": 3024.32,
+      "unstaffed_seconds": 575.6,
+      "staffed_percent": 84.01,
+      "unstaffed_percent": 15.99
+    },
+    {
+      "hour": "10:00",
+      "staffed_seconds": 3182.4,
+      "unstaffed_seconds": 417.6,
+      "staffed_percent": 88.4,
+      "unstaffed_percent": 11.6
+    },
+    {
+      "hour": "11:00",
+      "staffed_seconds": 1786.24,
+      "unstaffed_seconds": 1813.76,
+      "staffed_percent": 49.62,
+      "unstaffed_percent": 50.38
+    },
+    {
+      "hour": "12:00",
+      "staffed_seconds": 1216.16,
+      "unstaffed_seconds": 2383.84,
+      "staffed_percent": 33.78,
+      "unstaffed_percent": 66.22
+    },
+    {
+      "hour": "13:00",
+      "staffed_seconds": 1516.56,
+      "unstaffed_seconds": 2083.44,
+      "staffed_percent": 42.13,
+      "unstaffed_percent": 57.87
+    },
+    {
+      "hour": "14:00",
+      "staffed_seconds": 1804.52,
+      "unstaffed_seconds": 1795.48,
+      "staffed_percent": 50.13,
+      "unstaffed_percent": 49.87
+    },
+    {
+      "hour": "15:00",
+      "staffed_seconds": 1338.68,
+      "unstaffed_seconds": 2261.32,
+      "staffed_percent": 37.19,
+      "unstaffed_percent": 62.81
+    },
+    {
+      "hour": "16:00",
+      "staffed_seconds": 1115.72,
+      "unstaffed_seconds": 2484.28,
+      "staffed_percent": 30.99,
+      "unstaffed_percent": 69.01
+    },
+    {
+      "hour": "17:00",
+      "staffed_seconds": 1404.56,
+      "unstaffed_seconds": 2195.44,
+      "staffed_percent": 39.02,
+      "unstaffed_percent": 60.98
+    },
+    {
+      "hour": "18:00",
+      "staffed_seconds": 1166.48,
+      "unstaffed_seconds": 2433.52,
+      "staffed_percent": 32.4,
+      "unstaffed_percent": 67.6
+    },
+    {
+      "hour": "19:00",
+      "staffed_seconds": 1308.2,
+      "unstaffed_seconds": 2291.8,
+      "staffed_percent": 36.34,
+      "unstaffed_percent": 63.66
+    },
+    {
+      "hour": "20:00",
+      "staffed_seconds": 883.68,
+      "unstaffed_seconds": 2716.32,
+      "staffed_percent": 24.55,
+      "unstaffed_percent": 75.45
+    },
+    {
+      "hour": "21:00",
+      "staffed_seconds": 1476.6,
+      "unstaffed_seconds": 1200.6,
+      "staffed_percent": 55.15,
+      "unstaffed_percent": 44.85
+    },
+    {
+      "hour": "22:00",
+      "staffed_seconds": 0.0,
+      "unstaffed_seconds": 0.0,
+      "staffed_percent": 0.0,
+      "unstaffed_percent": 0.0
+    },
+    {
+      "hour": "23:00",
+      "staffed_seconds": 0.0,
+      "unstaffed_seconds": 0.0,
+      "staffed_percent": 0.0,
+      "unstaffed_percent": 0.0
+    }
+  ],
+  "summary": {
+    "total_staffed_seconds": 21224.12,
+    "total_unstaffed_seconds": 24653.0,
+    "staffed_percent": 46.26,
+    "unstaffed_percent": 53.74
+  }
+}

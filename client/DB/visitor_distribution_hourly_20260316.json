@@ -1,0 +1,1473 @@
+{
+  "source_file": "DB/snapshots_20260316.csv",
+  "metric": "customers",
+  "zones": [
+    "cam1",
+    "cam2",
+    "cam3"
+  ],
+  "camera_ids": [
+    "cam1",
+    "cam2",
+    "cam3"
+  ],
+  "hours": [
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+    "21:00"
+  ],
+  "by_camera_hour": [
+    {
+      "camera_id": "cam1",
+      "hour": "09:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.0976,
+      "sample_count": 123,
+      "total_count": 12.0
+    },
+    {
+      "camera_id": "cam1",
+      "hour": "10:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.2932,
+      "sample_count": 133,
+      "total_count": 39.0
+    },
+    {
+      "camera_id": "cam1",
+      "hour": "11:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.321,
+      "sample_count": 162,
+      "total_count": 52.0
+    },
+    {
+      "camera_id": "cam1",
+      "hour": "12:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.5532,
+      "sample_count": 188,
+      "total_count": 104.0
+    },
+    {
+      "camera_id": "cam1",
+      "hour": "13:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.7085,
+      "sample_count": 199,
+      "total_count": 141.0
+    },
+    {
+      "camera_id": "cam1",
+      "hour": "14:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.7991,
+      "sample_count": 229,
+      "total_count": 183.0
+    },
+    {
+      "camera_id": "cam1",
+      "hour": "15:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.5254,
+      "sample_count": 177,
+      "total_count": 93.0
+    },
+    {
+      "camera_id": "cam1",
+      "hour": "16:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.6596,
+      "sample_count": 188,
+      "total_count": 124.0
+    },
+    {
+      "camera_id": "cam1",
+      "hour": "17:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.6409,
+      "sample_count": 181,
+      "total_count": 116.0
+    },
+    {
+      "camera_id": "cam1",
+      "hour": "18:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.9105,
+      "sample_count": 190,
+      "total_count": 173.0
+    },
+    {
+      "camera_id": "cam1",
+      "hour": "19:00",
+      "avg_count": 1,
+      "avg_count_raw": 1.1929,
+      "sample_count": 197,
+      "total_count": 235.0
+    },
+    {
+      "camera_id": "cam1",
+      "hour": "20:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.4492,
+      "sample_count": 187,
+      "total_count": 84.0
+    },
+    {
+      "camera_id": "cam1",
+      "hour": "21:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.1304,
+      "sample_count": 69,
+      "total_count": 9.0
+    },
+    {
+      "camera_id": "cam2",
+      "hour": "09:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.1267,
+      "sample_count": 150,
+      "total_count": 19.0
+    },
+    {
+      "camera_id": "cam2",
+      "hour": "10:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.0779,
+      "sample_count": 154,
+      "total_count": 12.0
+    },
+    {
+      "camera_id": "cam2",
+      "hour": "11:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.1908,
+      "sample_count": 173,
+      "total_count": 33.0
+    },
+    {
+      "camera_id": "cam2",
+      "hour": "12:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.1461,
+      "sample_count": 178,
+      "total_count": 26.0
+    },
+    {
+      "camera_id": "cam2",
+      "hour": "13:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.19,
+      "sample_count": 200,
+      "total_count": 38.0
+    },
+    {
+      "camera_id": "cam2",
+      "hour": "14:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.1831,
+      "sample_count": 213,
+      "total_count": 39.0
+    },
+    {
+      "camera_id": "cam2",
+      "hour": "15:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.2995,
+      "sample_count": 187,
+      "total_count": 56.0
+    },
+    {
+      "camera_id": "cam2",
+      "hour": "16:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.3147,
+      "sample_count": 197,
+      "total_count": 62.0
+    },
+    {
+      "camera_id": "cam2",
+      "hour": "17:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.1979,
+      "sample_count": 192,
+      "total_count": 38.0
+    },
+    {
+      "camera_id": "cam2",
+      "hour": "18:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.2849,
+      "sample_count": 186,
+      "total_count": 53.0
+    },
+    {
+      "camera_id": "cam2",
+      "hour": "19:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.2792,
+      "sample_count": 197,
+      "total_count": 55.0
+    },
+    {
+      "camera_id": "cam2",
+      "hour": "20:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.2316,
+      "sample_count": 190,
+      "total_count": 44.0
+    },
+    {
+      "camera_id": "cam2",
+      "hour": "21:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.0814,
+      "sample_count": 86,
+      "total_count": 7.0
+    },
+    {
+      "camera_id": "cam3",
+      "hour": "09:00",
+      "avg_count": 2,
+      "avg_count_raw": 1.7553,
+      "sample_count": 188,
+      "total_count": 330.0
+    },
+    {
+      "camera_id": "cam3",
+      "hour": "10:00",
+      "avg_count": 2,
+      "avg_count_raw": 2.4184,
+      "sample_count": 196,
+      "total_count": 474.0
+    },
+    {
+      "camera_id": "cam3",
+      "hour": "11:00",
+      "avg_count": 3,
+      "avg_count_raw": 3.3397,
+      "sample_count": 209,
+      "total_count": 698.0
+    },
+    {
+      "camera_id": "cam3",
+      "hour": "12:00",
+      "avg_count": 5,
+      "avg_count_raw": 4.6611,
+      "sample_count": 239,
+      "total_count": 1114.0
+    },
+    {
+      "camera_id": "cam3",
+      "hour": "13:00",
+      "avg_count": 7,
+      "avg_count_raw": 6.8853,
+      "sample_count": 279,
+      "total_count": 1921.0
+    },
+    {
+      "camera_id": "cam3",
+      "hour": "14:00",
+      "avg_count": 6,
+      "avg_count_raw": 5.9008,
+      "sample_count": 242,
+      "total_count": 1428.0
+    },
+    {
+      "camera_id": "cam3",
+      "hour": "15:00",
+      "avg_count": 6,
+      "avg_count_raw": 5.7874,
+      "sample_count": 254,
+      "total_count": 1470.0
+    },
+    {
+      "camera_id": "cam3",
+      "hour": "16:00",
+      "avg_count": 7,
+      "avg_count_raw": 6.8371,
+      "sample_count": 264,
+      "total_count": 1805.0
+    },
+    {
+      "camera_id": "cam3",
+      "hour": "17:00",
+      "avg_count": 6,
+      "avg_count_raw": 5.8308,
+      "sample_count": 260,
+      "total_count": 1516.0
+    },
+    {
+      "camera_id": "cam3",
+      "hour": "18:00",
+      "avg_count": 5,
+      "avg_count_raw": 5.3026,
+      "sample_count": 195,
+      "total_count": 1034.0
+    },
+    {
+      "camera_id": "cam3",
+      "hour": "19:00",
+      "avg_count": 4,
+      "avg_count_raw": 4.4783,
+      "sample_count": 115,
+      "total_count": 515.0
+    },
+    {
+      "camera_id": "cam3",
+      "hour": "20:00",
+      "avg_count": 3,
+      "avg_count_raw": 2.8039,
+      "sample_count": 102,
+      "total_count": 286.0
+    },
+    {
+      "camera_id": "cam3",
+      "hour": "21:00",
+      "avg_count": 2,
+      "avg_count_raw": 1.5682,
+      "sample_count": 44,
+      "total_count": 69.0
+    }
+  ],
+  "by_hour": [
+    {
+      "hour": "09:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.7831,
+      "sample_count": 461,
+      "total_count": 361.0,
+      "by_camera": [
+        {
+          "camera_id": "cam1",
+          "avg_count": 0,
+          "avg_count_raw": 0.0976,
+          "sample_count": 123,
+          "total_count": 12.0
+        },
+        {
+          "camera_id": "cam2",
+          "avg_count": 0,
+          "avg_count_raw": 0.1267,
+          "sample_count": 150,
+          "total_count": 19.0
+        },
+        {
+          "camera_id": "cam3",
+          "avg_count": 2,
+          "avg_count_raw": 1.7553,
+          "sample_count": 188,
+          "total_count": 330.0
+        }
+      ]
+    },
+    {
+      "hour": "10:00",
+      "avg_count": 1,
+      "avg_count_raw": 1.087,
+      "sample_count": 483,
+      "total_count": 525.0,
+      "by_camera": [
+        {
+          "camera_id": "cam1",
+          "avg_count": 0,
+          "avg_count_raw": 0.2932,
+          "sample_count": 133,
+          "total_count": 39.0
+        },
+        {
+          "camera_id": "cam2",
+          "avg_count": 0,
+          "avg_count_raw": 0.0779,
+          "sample_count": 154,
+          "total_count": 12.0
+        },
+        {
+          "camera_id": "cam3",
+          "avg_count": 2,
+          "avg_count_raw": 2.4184,
+          "sample_count": 196,
+          "total_count": 474.0
+        }
+      ]
+    },
+    {
+      "hour": "11:00",
+      "avg_count": 1,
+      "avg_count_raw": 1.4393,
+      "sample_count": 544,
+      "total_count": 783.0,
+      "by_camera": [
+        {
+          "camera_id": "cam1",
+          "avg_count": 0,
+          "avg_count_raw": 0.321,
+          "sample_count": 162,
+          "total_count": 52.0
+        },
+        {
+          "camera_id": "cam2",
+          "avg_count": 0,
+          "avg_count_raw": 0.1908,
+          "sample_count": 173,
+          "total_count": 33.0
+        },
+        {
+          "camera_id": "cam3",
+          "avg_count": 3,
+          "avg_count_raw": 3.3397,
+          "sample_count": 209,
+          "total_count": 698.0
+        }
+      ]
+    },
+    {
+      "hour": "12:00",
+      "avg_count": 2,
+      "avg_count_raw": 2.0562,
+      "sample_count": 605,
+      "total_count": 1244.0,
+      "by_camera": [
+        {
+          "camera_id": "cam1",
+          "avg_count": 1,
+          "avg_count_raw": 0.5532,
+          "sample_count": 188,
+          "total_count": 104.0
+        },
+        {
+          "camera_id": "cam2",
+          "avg_count": 0,
+          "avg_count_raw": 0.1461,
+          "sample_count": 178,
+          "total_count": 26.0
+        },
+        {
+          "camera_id": "cam3",
+          "avg_count": 5,
+          "avg_count_raw": 4.6611,
+          "sample_count": 239,
+          "total_count": 1114.0
+        }
+      ]
+    },
+    {
+      "hour": "13:00",
+      "avg_count": 3,
+      "avg_count_raw": 3.0973,
+      "sample_count": 678,
+      "total_count": 2100.0,
+      "by_camera": [
+        {
+          "camera_id": "cam1",
+          "avg_count": 1,
+          "avg_count_raw": 0.7085,
+          "sample_count": 199,
+          "total_count": 141.0
+        },
+        {
+          "camera_id": "cam2",
+          "avg_count": 0,
+          "avg_count_raw": 0.19,
+          "sample_count": 200,
+          "total_count": 38.0
+        },
+        {
+          "camera_id": "cam3",
+          "avg_count": 7,
+          "avg_count_raw": 6.8853,
+          "sample_count": 279,
+          "total_count": 1921.0
+        }
+      ]
+    },
+    {
+      "hour": "14:00",
+      "avg_count": 2,
+      "avg_count_raw": 2.4123,
+      "sample_count": 684,
+      "total_count": 1650.0,
+      "by_camera": [
+        {
+          "camera_id": "cam1",
+          "avg_count": 1,
+          "avg_count_raw": 0.7991,
+          "sample_count": 229,
+          "total_count": 183.0
+        },
+        {
+          "camera_id": "cam2",
+          "avg_count": 0,
+          "avg_count_raw": 0.1831,
+          "sample_count": 213,
+          "total_count": 39.0
+        },
+        {
+          "camera_id": "cam3",
+          "avg_count": 6,
+          "avg_count_raw": 5.9008,
+          "sample_count": 242,
+          "total_count": 1428.0
+        }
+      ]
+    },
+    {
+      "hour": "15:00",
+      "avg_count": 3,
+      "avg_count_raw": 2.6197,
+      "sample_count": 618,
+      "total_count": 1619.0,
+      "by_camera": [
+        {
+          "camera_id": "cam1",
+          "avg_count": 1,
+          "avg_count_raw": 0.5254,
+          "sample_count": 177,
+          "total_count": 93.0
+        },
+        {
+          "camera_id": "cam2",
+          "avg_count": 0,
+          "avg_count_raw": 0.2995,
+          "sample_count": 187,
+          "total_count": 56.0
+        },
+        {
+          "camera_id": "cam3",
+          "avg_count": 6,
+          "avg_count_raw": 5.7874,
+          "sample_count": 254,
+          "total_count": 1470.0
+        }
+      ]
+    },
+    {
+      "hour": "16:00",
+      "avg_count": 3,
+      "avg_count_raw": 3.0678,
+      "sample_count": 649,
+      "total_count": 1991.0,
+      "by_camera": [
+        {
+          "camera_id": "cam1",
+          "avg_count": 1,
+          "avg_count_raw": 0.6596,
+          "sample_count": 188,
+          "total_count": 124.0
+        },
+        {
+          "camera_id": "cam2",
+          "avg_count": 0,
+          "avg_count_raw": 0.3147,
+          "sample_count": 197,
+          "total_count": 62.0
+        },
+        {
+          "camera_id": "cam3",
+          "avg_count": 7,
+          "avg_count_raw": 6.8371,
+          "sample_count": 264,
+          "total_count": 1805.0
+        }
+      ]
+    },
+    {
+      "hour": "17:00",
+      "avg_count": 3,
+      "avg_count_raw": 2.6382,
+      "sample_count": 633,
+      "total_count": 1670.0,
+      "by_camera": [
+        {
+          "camera_id": "cam1",
+          "avg_count": 1,
+          "avg_count_raw": 0.6409,
+          "sample_count": 181,
+          "total_count": 116.0
+        },
+        {
+          "camera_id": "cam2",
+          "avg_count": 0,
+          "avg_count_raw": 0.1979,
+          "sample_count": 192,
+          "total_count": 38.0
+        },
+        {
+          "camera_id": "cam3",
+          "avg_count": 6,
+          "avg_count_raw": 5.8308,
+          "sample_count": 260,
+          "total_count": 1516.0
+        }
+      ]
+    },
+    {
+      "hour": "18:00",
+      "avg_count": 2,
+      "avg_count_raw": 2.2067,
+      "sample_count": 571,
+      "total_count": 1260.0,
+      "by_camera": [
+        {
+          "camera_id": "cam1",
+          "avg_count": 1,
+          "avg_count_raw": 0.9105,
+          "sample_count": 190,
+          "total_count": 173.0
+        },
+        {
+          "camera_id": "cam2",
+          "avg_count": 0,
+          "avg_count_raw": 0.2849,
+          "sample_count": 186,
+          "total_count": 53.0
+        },
+        {
+          "camera_id": "cam3",
+          "avg_count": 5,
+          "avg_count_raw": 5.3026,
+          "sample_count": 195,
+          "total_count": 1034.0
+        }
+      ]
+    },
+    {
+      "hour": "19:00",
+      "avg_count": 2,
+      "avg_count_raw": 1.5815,
+      "sample_count": 509,
+      "total_count": 805.0,
+      "by_camera": [
+        {
+          "camera_id": "cam1",
+          "avg_count": 1,
+          "avg_count_raw": 1.1929,
+          "sample_count": 197,
+          "total_count": 235.0
+        },
+        {
+          "camera_id": "cam2",
+          "avg_count": 0,
+          "avg_count_raw": 0.2792,
+          "sample_count": 197,
+          "total_count": 55.0
+        },
+        {
+          "camera_id": "cam3",
+          "avg_count": 4,
+          "avg_count_raw": 4.4783,
+          "sample_count": 115,
+          "total_count": 515.0
+        }
+      ]
+    },
+    {
+      "hour": "20:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.8643,
+      "sample_count": 479,
+      "total_count": 414.0,
+      "by_camera": [
+        {
+          "camera_id": "cam1",
+          "avg_count": 0,
+          "avg_count_raw": 0.4492,
+          "sample_count": 187,
+          "total_count": 84.0
+        },
+        {
+          "camera_id": "cam2",
+          "avg_count": 0,
+          "avg_count_raw": 0.2316,
+          "sample_count": 190,
+          "total_count": 44.0
+        },
+        {
+          "camera_id": "cam3",
+          "avg_count": 3,
+          "avg_count_raw": 2.8039,
+          "sample_count": 102,
+          "total_count": 286.0
+        }
+      ]
+    },
+    {
+      "hour": "21:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.4271,
+      "sample_count": 199,
+      "total_count": 85.0,
+      "by_camera": [
+        {
+          "camera_id": "cam1",
+          "avg_count": 0,
+          "avg_count_raw": 0.1304,
+          "sample_count": 69,
+          "total_count": 9.0
+        },
+        {
+          "camera_id": "cam2",
+          "avg_count": 0,
+          "avg_count_raw": 0.0814,
+          "sample_count": 86,
+          "total_count": 7.0
+        },
+        {
+          "camera_id": "cam3",
+          "avg_count": 2,
+          "avg_count_raw": 1.5682,
+          "sample_count": 44,
+          "total_count": 69.0
+        }
+      ]
+    }
+  ],
+  "by_camera": [
+    {
+      "camera_id": "cam1",
+      "avg_count": 1,
+      "avg_count_raw": 0.614,
+      "sample_count": 2223,
+      "total_count": 1365.0,
+      "by_hour": [
+        {
+          "hour": "09:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.0976,
+          "sample_count": 123,
+          "total_count": 12.0
+        },
+        {
+          "hour": "10:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.2932,
+          "sample_count": 133,
+          "total_count": 39.0
+        },
+        {
+          "hour": "11:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.321,
+          "sample_count": 162,
+          "total_count": 52.0
+        },
+        {
+          "hour": "12:00",
+          "avg_count": 1,
+          "avg_count_raw": 0.5532,
+          "sample_count": 188,
+          "total_count": 104.0
+        },
+        {
+          "hour": "13:00",
+          "avg_count": 1,
+          "avg_count_raw": 0.7085,
+          "sample_count": 199,
+          "total_count": 141.0
+        },
+        {
+          "hour": "14:00",
+          "avg_count": 1,
+          "avg_count_raw": 0.7991,
+          "sample_count": 229,
+          "total_count": 183.0
+        },
+        {
+          "hour": "15:00",
+          "avg_count": 1,
+          "avg_count_raw": 0.5254,
+          "sample_count": 177,
+          "total_count": 93.0
+        },
+        {
+          "hour": "16:00",
+          "avg_count": 1,
+          "avg_count_raw": 0.6596,
+          "sample_count": 188,
+          "total_count": 124.0
+        },
+        {
+          "hour": "17:00",
+          "avg_count": 1,
+          "avg_count_raw": 0.6409,
+          "sample_count": 181,
+          "total_count": 116.0
+        },
+        {
+          "hour": "18:00",
+          "avg_count": 1,
+          "avg_count_raw": 0.9105,
+          "sample_count": 190,
+          "total_count": 173.0
+        },
+        {
+          "hour": "19:00",
+          "avg_count": 1,
+          "avg_count_raw": 1.1929,
+          "sample_count": 197,
+          "total_count": 235.0
+        },
+        {
+          "hour": "20:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.4492,
+          "sample_count": 187,
+          "total_count": 84.0
+        },
+        {
+          "hour": "21:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.1304,
+          "sample_count": 69,
+          "total_count": 9.0
+        }
+      ]
+    },
+    {
+      "camera_id": "cam2",
+      "avg_count": 0,
+      "avg_count_raw": 0.2093,
+      "sample_count": 2303,
+      "total_count": 482.0,
+      "by_hour": [
+        {
+          "hour": "09:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.1267,
+          "sample_count": 150,
+          "total_count": 19.0
+        },
+        {
+          "hour": "10:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.0779,
+          "sample_count": 154,
+          "total_count": 12.0
+        },
+        {
+          "hour": "11:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.1908,
+          "sample_count": 173,
+          "total_count": 33.0
+        },
+        {
+          "hour": "12:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.1461,
+          "sample_count": 178,
+          "total_count": 26.0
+        },
+        {
+          "hour": "13:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.19,
+          "sample_count": 200,
+          "total_count": 38.0
+        },
+        {
+          "hour": "14:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.1831,
+          "sample_count": 213,
+          "total_count": 39.0
+        },
+        {
+          "hour": "15:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.2995,
+          "sample_count": 187,
+          "total_count": 56.0
+        },
+        {
+          "hour": "16:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.3147,
+          "sample_count": 197,
+          "total_count": 62.0
+        },
+        {
+          "hour": "17:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.1979,
+          "sample_count": 192,
+          "total_count": 38.0
+        },
+        {
+          "hour": "18:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.2849,
+          "sample_count": 186,
+          "total_count": 53.0
+        },
+        {
+          "hour": "19:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.2792,
+          "sample_count": 197,
+          "total_count": 55.0
+        },
+        {
+          "hour": "20:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.2316,
+          "sample_count": 190,
+          "total_count": 44.0
+        },
+        {
+          "hour": "21:00",
+          "avg_count": 0,
+          "avg_count_raw": 0.0814,
+          "sample_count": 86,
+          "total_count": 7.0
+        }
+      ]
+    },
+    {
+      "camera_id": "cam3",
+      "avg_count": 5,
+      "avg_count_raw": 4.8937,
+      "sample_count": 2587,
+      "total_count": 12660.0,
+      "by_hour": [
+        {
+          "hour": "09:00",
+          "avg_count": 2,
+          "avg_count_raw": 1.7553,
+          "sample_count": 188,
+          "total_count": 330.0
+        },
+        {
+          "hour": "10:00",
+          "avg_count": 2,
+          "avg_count_raw": 2.4184,
+          "sample_count": 196,
+          "total_count": 474.0
+        },
+        {
+          "hour": "11:00",
+          "avg_count": 3,
+          "avg_count_raw": 3.3397,
+          "sample_count": 209,
+          "total_count": 698.0
+        },
+        {
+          "hour": "12:00",
+          "avg_count": 5,
+          "avg_count_raw": 4.6611,
+          "sample_count": 239,
+          "total_count": 1114.0
+        },
+        {
+          "hour": "13:00",
+          "avg_count": 7,
+          "avg_count_raw": 6.8853,
+          "sample_count": 279,
+          "total_count": 1921.0
+        },
+        {
+          "hour": "14:00",
+          "avg_count": 6,
+          "avg_count_raw": 5.9008,
+          "sample_count": 242,
+          "total_count": 1428.0
+        },
+        {
+          "hour": "15:00",
+          "avg_count": 6,
+          "avg_count_raw": 5.7874,
+          "sample_count": 254,
+          "total_count": 1470.0
+        },
+        {
+          "hour": "16:00",
+          "avg_count": 7,
+          "avg_count_raw": 6.8371,
+          "sample_count": 264,
+          "total_count": 1805.0
+        },
+        {
+          "hour": "17:00",
+          "avg_count": 6,
+          "avg_count_raw": 5.8308,
+          "sample_count": 260,
+          "total_count": 1516.0
+        },
+        {
+          "hour": "18:00",
+          "avg_count": 5,
+          "avg_count_raw": 5.3026,
+          "sample_count": 195,
+          "total_count": 1034.0
+        },
+        {
+          "hour": "19:00",
+          "avg_count": 4,
+          "avg_count_raw": 4.4783,
+          "sample_count": 115,
+          "total_count": 515.0
+        },
+        {
+          "hour": "20:00",
+          "avg_count": 3,
+          "avg_count_raw": 2.8039,
+          "sample_count": 102,
+          "total_count": 286.0
+        },
+        {
+          "hour": "21:00",
+          "avg_count": 2,
+          "avg_count_raw": 1.5682,
+          "sample_count": 44,
+          "total_count": 69.0
+        }
+      ]
+    }
+  ],
+  "zone_hour": [
+    {
+      "zone": "cam1",
+      "hour": "09:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.0976,
+      "sample_count": 123,
+      "total_count": 12.0
+    },
+    {
+      "zone": "cam1",
+      "hour": "10:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.2932,
+      "sample_count": 133,
+      "total_count": 39.0
+    },
+    {
+      "zone": "cam1",
+      "hour": "11:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.321,
+      "sample_count": 162,
+      "total_count": 52.0
+    },
+    {
+      "zone": "cam1",
+      "hour": "12:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.5532,
+      "sample_count": 188,
+      "total_count": 104.0
+    },
+    {
+      "zone": "cam1",
+      "hour": "13:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.7085,
+      "sample_count": 199,
+      "total_count": 141.0
+    },
+    {
+      "zone": "cam1",
+      "hour": "14:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.7991,
+      "sample_count": 229,
+      "total_count": 183.0
+    },
+    {
+      "zone": "cam1",
+      "hour": "15:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.5254,
+      "sample_count": 177,
+      "total_count": 93.0
+    },
+    {
+      "zone": "cam1",
+      "hour": "16:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.6596,
+      "sample_count": 188,
+      "total_count": 124.0
+    },
+    {
+      "zone": "cam1",
+      "hour": "17:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.6409,
+      "sample_count": 181,
+      "total_count": 116.0
+    },
+    {
+      "zone": "cam1",
+      "hour": "18:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.9105,
+      "sample_count": 190,
+      "total_count": 173.0
+    },
+    {
+      "zone": "cam1",
+      "hour": "19:00",
+      "avg_count": 1,
+      "avg_count_raw": 1.1929,
+      "sample_count": 197,
+      "total_count": 235.0
+    },
+    {
+      "zone": "cam1",
+      "hour": "20:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.4492,
+      "sample_count": 187,
+      "total_count": 84.0
+    },
+    {
+      "zone": "cam1",
+      "hour": "21:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.1304,
+      "sample_count": 69,
+      "total_count": 9.0
+    },
+    {
+      "zone": "cam2",
+      "hour": "09:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.1267,
+      "sample_count": 150,
+      "total_count": 19.0
+    },
+    {
+      "zone": "cam2",
+      "hour": "10:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.0779,
+      "sample_count": 154,
+      "total_count": 12.0
+    },
+    {
+      "zone": "cam2",
+      "hour": "11:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.1908,
+      "sample_count": 173,
+      "total_count": 33.0
+    },
+    {
+      "zone": "cam2",
+      "hour": "12:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.1461,
+      "sample_count": 178,
+      "total_count": 26.0
+    },
+    {
+      "zone": "cam2",
+      "hour": "13:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.19,
+      "sample_count": 200,
+      "total_count": 38.0
+    },
+    {
+      "zone": "cam2",
+      "hour": "14:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.1831,
+      "sample_count": 213,
+      "total_count": 39.0
+    },
+    {
+      "zone": "cam2",
+      "hour": "15:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.2995,
+      "sample_count": 187,
+      "total_count": 56.0
+    },
+    {
+      "zone": "cam2",
+      "hour": "16:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.3147,
+      "sample_count": 197,
+      "total_count": 62.0
+    },
+    {
+      "zone": "cam2",
+      "hour": "17:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.1979,
+      "sample_count": 192,
+      "total_count": 38.0
+    },
+    {
+      "zone": "cam2",
+      "hour": "18:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.2849,
+      "sample_count": 186,
+      "total_count": 53.0
+    },
+    {
+      "zone": "cam2",
+      "hour": "19:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.2792,
+      "sample_count": 197,
+      "total_count": 55.0
+    },
+    {
+      "zone": "cam2",
+      "hour": "20:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.2316,
+      "sample_count": 190,
+      "total_count": 44.0
+    },
+    {
+      "zone": "cam2",
+      "hour": "21:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.0814,
+      "sample_count": 86,
+      "total_count": 7.0
+    },
+    {
+      "zone": "cam3",
+      "hour": "09:00",
+      "avg_count": 2,
+      "avg_count_raw": 1.7553,
+      "sample_count": 188,
+      "total_count": 330.0
+    },
+    {
+      "zone": "cam3",
+      "hour": "10:00",
+      "avg_count": 2,
+      "avg_count_raw": 2.4184,
+      "sample_count": 196,
+      "total_count": 474.0
+    },
+    {
+      "zone": "cam3",
+      "hour": "11:00",
+      "avg_count": 3,
+      "avg_count_raw": 3.3397,
+      "sample_count": 209,
+      "total_count": 698.0
+    },
+    {
+      "zone": "cam3",
+      "hour": "12:00",
+      "avg_count": 5,
+      "avg_count_raw": 4.6611,
+      "sample_count": 239,
+      "total_count": 1114.0
+    },
+    {
+      "zone": "cam3",
+      "hour": "13:00",
+      "avg_count": 7,
+      "avg_count_raw": 6.8853,
+      "sample_count": 279,
+      "total_count": 1921.0
+    },
+    {
+      "zone": "cam3",
+      "hour": "14:00",
+      "avg_count": 6,
+      "avg_count_raw": 5.9008,
+      "sample_count": 242,
+      "total_count": 1428.0
+    },
+    {
+      "zone": "cam3",
+      "hour": "15:00",
+      "avg_count": 6,
+      "avg_count_raw": 5.7874,
+      "sample_count": 254,
+      "total_count": 1470.0
+    },
+    {
+      "zone": "cam3",
+      "hour": "16:00",
+      "avg_count": 7,
+      "avg_count_raw": 6.8371,
+      "sample_count": 264,
+      "total_count": 1805.0
+    },
+    {
+      "zone": "cam3",
+      "hour": "17:00",
+      "avg_count": 6,
+      "avg_count_raw": 5.8308,
+      "sample_count": 260,
+      "total_count": 1516.0
+    },
+    {
+      "zone": "cam3",
+      "hour": "18:00",
+      "avg_count": 5,
+      "avg_count_raw": 5.3026,
+      "sample_count": 195,
+      "total_count": 1034.0
+    },
+    {
+      "zone": "cam3",
+      "hour": "19:00",
+      "avg_count": 4,
+      "avg_count_raw": 4.4783,
+      "sample_count": 115,
+      "total_count": 515.0
+    },
+    {
+      "zone": "cam3",
+      "hour": "20:00",
+      "avg_count": 3,
+      "avg_count_raw": 2.8039,
+      "sample_count": 102,
+      "total_count": 286.0
+    },
+    {
+      "zone": "cam3",
+      "hour": "21:00",
+      "avg_count": 2,
+      "avg_count_raw": 1.5682,
+      "sample_count": 44,
+      "total_count": 69.0
+    }
+  ],
+  "hourly_average": [
+    {
+      "hour": "09:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.7831,
+      "sample_count": 461,
+      "total_count": 361.0
+    },
+    {
+      "hour": "10:00",
+      "avg_count": 1,
+      "avg_count_raw": 1.087,
+      "sample_count": 483,
+      "total_count": 525.0
+    },
+    {
+      "hour": "11:00",
+      "avg_count": 1,
+      "avg_count_raw": 1.4393,
+      "sample_count": 544,
+      "total_count": 783.0
+    },
+    {
+      "hour": "12:00",
+      "avg_count": 2,
+      "avg_count_raw": 2.0562,
+      "sample_count": 605,
+      "total_count": 1244.0
+    },
+    {
+      "hour": "13:00",
+      "avg_count": 3,
+      "avg_count_raw": 3.0973,
+      "sample_count": 678,
+      "total_count": 2100.0
+    },
+    {
+      "hour": "14:00",
+      "avg_count": 2,
+      "avg_count_raw": 2.4123,
+      "sample_count": 684,
+      "total_count": 1650.0
+    },
+    {
+      "hour": "15:00",
+      "avg_count": 3,
+      "avg_count_raw": 2.6197,
+      "sample_count": 618,
+      "total_count": 1619.0
+    },
+    {
+      "hour": "16:00",
+      "avg_count": 3,
+      "avg_count_raw": 3.0678,
+      "sample_count": 649,
+      "total_count": 1991.0
+    },
+    {
+      "hour": "17:00",
+      "avg_count": 3,
+      "avg_count_raw": 2.6382,
+      "sample_count": 633,
+      "total_count": 1670.0
+    },
+    {
+      "hour": "18:00",
+      "avg_count": 2,
+      "avg_count_raw": 2.2067,
+      "sample_count": 571,
+      "total_count": 1260.0
+    },
+    {
+      "hour": "19:00",
+      "avg_count": 2,
+      "avg_count_raw": 1.5815,
+      "sample_count": 509,
+      "total_count": 805.0
+    },
+    {
+      "hour": "20:00",
+      "avg_count": 1,
+      "avg_count_raw": 0.8643,
+      "sample_count": 479,
+      "total_count": 414.0
+    },
+    {
+      "hour": "21:00",
+      "avg_count": 0,
+      "avg_count_raw": 0.4271,
+      "sample_count": 199,
+      "total_count": 85.0
+    }
+  ],
+  "zone_average": [
+    {
+      "zone": "cam1",
+      "avg_count": 1,
+      "avg_count_raw": 0.614,
+      "sample_count": 2223,
+      "total_count": 1365.0
+    },
+    {
+      "zone": "cam2",
+      "avg_count": 0,
+      "avg_count_raw": 0.2093,
+      "sample_count": 2303,
+      "total_count": 482.0
+    },
+    {
+      "zone": "cam3",
+      "avg_count": 5,
+      "avg_count_raw": 4.8937,
+      "sample_count": 2587,
+      "total_count": 12660.0
+    }
+  ],
+  "summary": {
+    "overall_avg_count": 2,
+    "overall_avg_count_raw": 2.0395,
+    "total_samples": 7113,
+    "total_count": 14507.0
+  }
+}
