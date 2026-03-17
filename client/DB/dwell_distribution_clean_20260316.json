@@ -93,7 +93,7 @@
       "pct_of_used_rows": 1.71
     },
     {
-      "bucket": "5-10min",
+      "bucket": "5-10мин",
       "min_seconds": 300.0,
       "max_seconds": 600.0,
       "customer_count": 4,
@@ -102,7 +102,7 @@
       "pct_of_used_rows": 2.65
     },
     {
-      "bucket": "10-15min",
+      "bucket": "10-15мин",
       "min_seconds": 600.0,
       "max_seconds": 900.0,
       "customer_count": 27,
@@ -111,7 +111,7 @@
       "pct_of_used_rows": 12.85
     },
     {
-      "bucket": "15-30min",
+      "bucket": "15-30мин",
       "min_seconds": 900.0,
       "max_seconds": 1800.0,
       "customer_count": 58,
@@ -120,7 +120,7 @@
       "pct_of_used_rows": 36.98
     },
     {
-      "bucket": "30-60min",
+      "bucket": "30-60мин",
       "min_seconds": 1800.0,
       "max_seconds": 3600.0,
       "customer_count": 22,

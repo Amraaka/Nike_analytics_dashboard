@@ -1,20 +1,13 @@
-import { promises as fs } from "node:fs";
-import path from "node:path";
-import { Clock3, Eye, Users, UserRoundCog } from "lucide-react";
-import StaffingPieChart from "./StaffingPieChart";
+"use client";
+
+import { useEffect, useState } from "react";
+import { Clock3, Eye, UserRoundCog } from "lucide-react";
 
 /* ── Types ─────────────────────────────────────────────────────── */
 
 type DwellData = {
   source_file: string;
-  generated_at_utc: string;
-  quality: {
-    input_rows: number;
-    rows_used_for_distribution: number;
-    rows_removed: number;
-    recomputed_duration_rows: number;
-    removed_by_reason: Record<string, number>;
-  };
+  quality: Record<string, unknown>;
   summary_by_role: Record<
     "customer" | "worker" | "all",
     {
@@ -28,17 +21,13 @@ type DwellData = {
   >;
   buckets: {
     bucket: string;
-    min_seconds: number;
-    max_seconds: number | null;
     customer_count: number;
     worker_count: number;
     total_count: number;
-    pct_of_used_rows: number;
   }[];
 };
 
 type StaffingData = {
-  source_file: string;
   hours: {
     hour: string;
     staffed_seconds: number;
@@ -54,50 +43,23 @@ type StaffingData = {
   };
 };
 
-type CameraHourEntry = {
-  camera_id: string;
-  hour: string;
-  avg_count: number;
-  avg_count_raw: number;
-  sample_count: number;
-  total_count: number;
-};
-
 type VisitorData = {
-  source_file: string;
-  metric: string;
   zones: string[];
   camera_ids: string[];
   hours: string[];
-  by_camera_hour: CameraHourEntry[];
-  zone_hour: {
-    zone: string;
-    hour: string;
-    avg_count: number;
-    avg_count_raw: number;
-    sample_count: number;
-    total_count: number;
-  }[];
+  by_camera_hour: { camera_id: string; hour: string; avg_count_raw: number }[];
+  zone_hour: { zone: string; hour: string; avg_count_raw: number }[];
   hourly_average: {
     hour: string;
-    avg_count: number;
     avg_count_raw: number;
-    sample_count: number;
     total_count: number;
   }[];
-  zone_average: {
-    zone: string;
-    avg_count: number;
-    avg_count_raw: number;
-    sample_count: number;
-    total_count: number;
-  }[];
-  summary: {
-    overall_avg_count: number;
-    overall_avg_count_raw: number;
-    total_samples: number;
-    total_count: number;
-  };
+};
+
+type DashboardData = {
+  dwell: DwellData;
+  staffing: StaffingData;
+  visitors: VisitorData;
 };
 
 /* ── Helpers ───────────────────────────────────────────────────── */
@@ -110,84 +72,119 @@ function fmtDur(s: number) {
   return `${s.toFixed(0)}сек`;
 }
 
-async function read<T>(name: string): Promise<T> {
-  const raw = await fs.readFile(path.join(process.cwd(), "DB", name), "utf8");
-  return JSON.parse(raw) as T;
-}
+const STAFFED_COLOR = "#10b981";
+const UNSTAFFED_COLOR = "#f43f5e";
+const CAM_HEX: Record<string, string> = {
+  cam1: "#38bdf8",
+  cam2: "#fbbf24",
+  cam3: "#0e7490",
+};
+const CAM_LABEL: Record<string, string> = {
+  cam1: "Дотор заал",
+  cam2: "Касс",
+  cam3: "Зүүн урд камер",
+};
+const CHART_H = 192;
+const roleLabels = {
+  customer: "Үйлчлүүлэгч",
+  worker: "Ажилтан",
+  all: "Нийт",
+} as const;
 
 /* ── Page ──────────────────────────────────────────────────────── */
 
-export default async function DashboardPage() {
-  const [dwell, staffing, visitors] = await Promise.all([
-    read<DwellData>("dwell_distribution_clean_20260316.json"),
-    read<StaffingData>("staffing_hourly_percent_20260316.json"),
-    read<VisitorData>("visitor_distribution_hourly_20260316.json"),
-  ]);
+export default function DashboardPage() {
+  const [data, setData] = useState<DashboardData | null>(null);
+  const [staffingMode, setStaffingMode] = useState<"summary" | "hour">(
+    "summary",
+  );
+  const [staffingHour, setStaffingHour] = useState("");
 
+  useEffect(() => {
+    fetch("/api/dashboard")
+      .then((r) => r.json())
+      .then(setData)
+      .catch(console.error);
+  }, []);
+
+  if (!data) {
+    return (
+      <div className="flex min-h-[200px] items-center justify-center text-slate-500">
+        Ачааллаж байна...
+      </div>
+    );
+  }
+
+  const { dwell, staffing, visitors } = data;
   const peakHour = visitors.hourly_average.reduce((a, b) =>
-    b.avg_count_raw > a.avg_count_raw ? b : a
+    b.avg_count_raw > a.avg_count_raw ? b : a,
   );
   const maxCustomerBucket = Math.max(
     ...dwell.buckets.map((b) => b.customer_count),
-    1
+    1,
   );
   const maxZoneHour = Math.max(
     ...visitors.zone_hour.map((e) => e.avg_count_raw),
-    1
+    1,
   );
   const heatMap = new Map(
-    visitors.zone_hour.map((e) => [`${e.zone}:${e.hour}`, e.avg_count_raw])
+    visitors.zone_hour.map((e) => [`${e.zone}:${e.hour}`, e.avg_count_raw]),
   );
-
-  // Camera-hour lookup: key = "cam1:09:00" → entry
   const camHourMap = new Map(
-    visitors.by_camera_hour.map((e) => [`${e.camera_id}:${e.hour}`, e])
+    visitors.by_camera_hour.map((e) => [
+      `${e.camera_id}:${e.hour}`,
+      e.avg_count_raw,
+    ]),
   );
   const cameras = visitors.camera_ids;
-  // Explicit hex colors — avoids Tailwind purge issues with dynamic class lookups
-  const CAM_HEX: Record<string, string> = {
-    cam1: "#38bdf8", // sky-400
-    cam2: "#fbbf24", // amber-400
-    cam3: "#0e7490", // cyan-700
-  };
-  const CAM_LABEL: Record<string, string> = {
-    cam1: "Дотор заал",
-    cam2: "Касс",
-    cam3: "Зүүн урд камер",
-  };
-  const CHART_H = 192; // px — matches h-48
-  // For stacked bars, max is the highest per-hour sum across cameras
   const maxHourlySum = Math.max(
     ...visitors.hours.map((hr) =>
       cameras.reduce(
-        (sum, cam) =>
-          sum + (camHourMap.get(`${cam}:${hr}`)?.avg_count_raw ?? 0),
-        0
-      )
+        (sum, cam) => sum + (camHourMap.get(`${cam}:${hr}`) ?? 0),
+        0,
+      ),
     ),
-    1
+    1,
   );
-  const roleLabels = {
-    customer: "Үйлчлүүлэгч",
-    worker: "Ажилтан",
-    all: "Нийт",
-  } as const;
+
+  const activeStaffingHours = staffing.hours.filter(
+    (h) => h.staffed_seconds > 0 || h.unstaffed_seconds > 0,
+  );
+  const staffingHourVal =
+    staffingHour && activeStaffingHours.some((h) => h.hour === staffingHour)
+      ? staffingHour
+      : (activeStaffingHours[0]?.hour ?? "09:00");
+  const staffingData =
+    staffingMode === "summary"
+      ? {
+          staffed: staffing.summary.staffed_percent,
+          unstaffed: staffing.summary.unstaffed_percent,
+          label: "Нийт",
+        }
+      : (() => {
+          const h = staffing.hours.find((x) => x.hour === staffingHourVal);
+          if (!h) return { staffed: 0, unstaffed: 0, label: staffingHourVal };
+          return {
+            staffed: h.staffed_percent,
+            unstaffed: h.unstaffed_percent,
+            label: staffingHourVal,
+          };
+        })();
+  const staffedPct =
+    staffingData.staffed + staffingData.unstaffed > 0
+      ? (staffingData.staffed /
+          (staffingData.staffed + staffingData.unstaffed)) *
+        100
+      : 0;
 
   return (
     <div className="space-y-6">
-      {/* ═══════════ TOP: Average / Summary Metric Cards ═══════════ */}
+      {/* ═══════════ TOP: Metric Cards ═══════════ */}
       <section className="grid gap-3 grid-cols-2 lg:grid-cols-3">
         {[
-          // {
-          //   label: "Дундаж үйлчлүүлэгч",
-          //   value: visitors.summary.overall_avg_count_raw.toFixed(2),
-          //   sub: `${numFmt.format(visitors.summary.total_count)} нийт илрүүлэлт`,
-          //   Icon: Users,
-          // },
           {
             label: "Үйлчлүүлсэн дундаж хугацаа",
             value: fmtDur(dwell.summary_by_role.customer.p50_seconds),
-            // sub: `Үйлчлүүлэгч ${fmtDur(dwell.summary_by_role.customer.p50_seconds) }`,
             Icon: Clock3,
           },
           {
@@ -207,7 +204,7 @@ export default async function DashboardPage() {
             key={c.label}
             className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
           >
-            <div className="flex items-center justify-between mb-3">
+            <div className="mb-3 flex items-center justify-between">
               <span className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
                 {c.label}
               </span>
@@ -216,16 +213,16 @@ export default async function DashboardPage() {
               </span>
             </div>
             <p className="text-2xl font-bold text-slate-900">{c.value}</p>
-            <p className="mt-1 text-xs text-slate-500">{c.sub}</p>
+            {"sub" in c && c.sub && (
+              <p className="mt-1 text-xs text-slate-500">{c.sub}</p>
+            )}
           </div>
         ))}
       </section>
 
-      {/* ═══════════ GRAPHS / DISTRIBUTIONS ════════════════════════ */}
-
-      {/* ── 1. Hourly Visitor Bar Chart (stacked by camera) ────── */}
+      {/* ═══════════ 1. Hourly Visitor Bar Chart ═══════════ */}
       <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-        <div className="flex items-center justify-between mb-12">
+        <div className="mb-12 flex items-center justify-between">
           <h2 className="text-base font-semibold text-slate-900">
             Цаг тутмын дундаж үйлчлүүлэгчийн тархалт (камерын бүсээр)
           </h2>
@@ -247,7 +244,7 @@ export default async function DashboardPage() {
           {visitors.hours.map((hr) => {
             const segments = cameras.map((cam) => ({
               cam,
-              value: camHourMap.get(`${cam}:${hr}`)?.avg_count_raw ?? 0,
+              value: camHourMap.get(`${cam}:${hr}`) ?? 0,
             }));
             const total = segments.reduce((s, seg) => s + seg.value, 0);
             const barH = Math.max((total / maxHourlySum) * CHART_H, 6);
@@ -256,12 +253,10 @@ export default async function DashboardPage() {
                 key={hr}
                 className="group relative flex flex-1 flex-col items-center justify-end"
               >
-                {/* stacked bar — flex column fills height proportionally */}
                 <div
                   className="flex w-full flex-col overflow-hidden rounded-t"
                   style={{ height: `${barH}px` }}
                 >
-                  {/* render bottom→top: cam1 at bottom, cam3 at top */}
                   {[...segments].reverse().map((seg) => (
                     <div
                       key={seg.cam}
@@ -272,8 +267,14 @@ export default async function DashboardPage() {
                     />
                   ))}
                 </div>
-                <span className="absolute -top-6 hidden group-hover:block text-[10px] bg-slate-800 text-white rounded px-1.5 py-0.5 whitespace-nowrap z-10">
-                  {hr} · {segments.map((s) => `${CAM_LABEL[s.cam] ?? s.cam}: ${s.value.toFixed(2)}`).join(" · ")}
+                <span className="absolute -top-6 z-10 hidden whitespace-nowrap rounded bg-slate-800 px-1.5 py-0.5 text-[10px] text-white group-hover:block">
+                  {hr} ·{" "}
+                  {segments
+                    .map(
+                      (s) =>
+                        `${CAM_LABEL[s.cam] ?? s.cam}: ${s.value.toFixed(2)}`,
+                    )
+                    .join(" · ")}
                 </span>
                 <span className="mt-1 text-[10px] text-slate-400">
                   {hr.slice(0, 2)}
@@ -284,47 +285,126 @@ export default async function DashboardPage() {
         </div>
       </section>
 
-      {/* ── 2. Staffing Coverage (Pie Chart) ────────────────────── */}
-      <StaffingPieChart staffing={staffing} />
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {/* ═══════════ 2. Staffing Coverage (Pie Chart) ───────────────── */}
+        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h2 className="text-base font-semibold text-slate-900">Касс</h2>
+          <p className="mb-4 text-xs text-slate-500">
+            Ажилтантай / ажилтангүй хугацааны хувь.
+          </p>
+          <div className="mb-4 flex flex-wrap items-center gap-3">
+            <div className="flex rounded-lg border border-slate-200 p-0.5">
+              <button
+                type="button"
+                onClick={() => setStaffingMode("summary")}
+                className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                  staffingMode === "summary"
+                    ? "bg-slate-900 text-white"
+                    : "text-slate-600 hover:bg-slate-100"
+                }`}
+              >
+                Хураангуй
+              </button>
+              <button
+                type="button"
+                onClick={() => setStaffingMode("hour")}
+                className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                  staffingMode === "hour"
+                    ? "bg-slate-900 text-white"
+                    : "text-slate-600 hover:bg-slate-100"
+                }`}
+              >
+                Цагаар
+              </button>
+            </div>
+            {staffingMode === "hour" && (
+              <select
+                value={staffingHourVal}
+                onChange={(e) => setStaffingHour(e.target.value)}
+                className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-700 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+              >
+                {activeStaffingHours.map((h) => (
+                  <option key={h.hour} value={h.hour}>
+                    {h.hour}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+          <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+            <div
+              className="h-48 w-48 shrink-0 rounded-full"
+              style={{
+                background: `conic-gradient(
+                ${STAFFED_COLOR} 0deg ${staffedPct * 3.6}deg,
+                ${UNSTAFFED_COLOR} ${staffedPct * 3.6}deg 360deg
+              )`,
+              }}
+            />
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-2">
+                <span
+                  className="inline-block h-3 w-3 rounded-full"
+                  style={{ backgroundColor: STAFFED_COLOR }}
+                />
+                <span className="text-sm text-slate-700">
+                  Ажилтантай:{" "}
+                  <strong>{staffingData.staffed.toFixed(1)}%</strong>
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span
+                  className="inline-block h-3 w-3 rounded-full"
+                  style={{ backgroundColor: UNSTAFFED_COLOR }}
+                />
+                <span className="text-sm text-slate-700">
+                  Ажилтангүй:{" "}
+                  <strong>{staffingData.unstaffed.toFixed(1)}%</strong>
+                </span>
+              </div>
+              <p className="text-xs text-slate-500">
+                {staffingMode === "summary"
+                  ? "Бүх үйл ажиллагааны цагийн нийт"
+                  : `${staffingData.label} цагийн хураангуй`}
+              </p>
+            </div>
+          </div>
+        </section>
 
-      {/* ── 3. Dwell Duration Distribution (Customer only) ───────── */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="text-base font-semibold text-slate-900">
-          Үйлчлүүлэгчийн хугацааны тархалт
-        </h2>
-        <p className="mb-4 text-xs text-slate-500">
-          Хугацааны ангилал бүрт үйлчлүүлэгчийн тоо.
-        </p>
-        <div className="space-y-2">
-          {dwell.buckets
-            .filter((b) => b.customer_count > 0)
-            .map((b) => {
-              const w = (b.customer_count / maxCustomerBucket) * 100;
-              return (
-                <div key={b.bucket} className="flex items-center gap-3">
-                  <span className="w-20 shrink-0 text-xs font-medium text-slate-600 text-right">
-                    {b.bucket}
-                  </span>
-                  <div className="flex-1">
-                    <div
-                      className="flex h-5 overflow-hidden rounded bg-cyan-500"
-                      style={{ width: `${Math.max(w, 2)}%` }}
-                    />
+        {/* ═══════════ 3. Dwell Duration Distribution ═══════════ */}
+        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h2 className="text-base font-semibold text-slate-900">
+            Үйлчлүүлэгчийн хугацааны тархалт
+          </h2>
+          <p className="mb-4 text-xs text-slate-500">
+            Хугацааны ангилал бүрт үйлчлүүлэгчийн тоо.
+          </p>
+          <div className="space-y-2">
+            {dwell.buckets
+              .filter((b) => b.customer_count > 0)
+              .map((b) => {
+                const w = (b.customer_count / maxCustomerBucket) * 100;
+                return (
+                  <div key={b.bucket} className="flex items-center gap-3">
+                    <span className="w-20 shrink-0 text-right text-xs font-medium text-slate-600">
+                      {b.bucket}
+                    </span>
+                    <div className="flex-1">
+                      <div
+                        className="flex h-5 overflow-hidden rounded bg-cyan-500"
+                        style={{ width: `${Math.max(w, 2)}%` }}
+                      />
+                    </div>
                   </div>
-                  {/* <span className="w-16 shrink-0 text-xs text-slate-500 text-right">
-                    {numFmt.format(b.customer_count)}
-                  </span> */}
-                </div>
-              );
-            })}
-        </div>
-      </section>
+                );
+              })}
+          </div>
+        </section>
+      </div>
 
-      {/* ── 4. Camera Zone Heatmap ─────────────────────────────── */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm overflow-x-auto">
-        <h2 className="text-base font-semibold text-slate-900">
-          Тархалт
-        </h2>
+      {/* ═══════════ 4. Camera Zone Heatmap ═══════════ */}
+      <section className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <h2 className="text-base font-semibold text-slate-900">Тархалт</h2>
         <p className="mb-4 text-xs text-slate-500">
           Худалдан авагчийн Дундаж тархалт
         </p>
@@ -374,44 +454,7 @@ export default async function DashboardPage() {
         </table>
       </section>
 
-      {/* ── 5. Zone Totals ─────────────────────────────────────── */}
-      {/* <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="text-base font-semibold text-slate-900">
-          Бүсийн хураангуй
-        </h2>
-        <p className="mb-4 text-xs text-slate-500">
-          Камер бүрийн нийт илрүүлэлт болон кадр тутмын дундаж.
-        </p>
-        <div className="grid gap-4 sm:grid-cols-3">
-          {[...visitors.zone_average]
-            .sort((a, b) => b.total_count - a.total_count)
-            .map((z) => {
-              const share =
-                visitors.summary.total_count > 0
-                  ? (z.total_count / visitors.summary.total_count) * 100
-                  : 0;
-              return (
-                <div
-                  key={z.zone}
-                  className="rounded-xl border border-slate-100 p-4"
-                >
-                  <p className="text-sm font-semibold text-slate-800">
-                    {CAM_LABEL[z.zone] ?? z.zone}
-                  </p>
-                  <p className="mt-1 text-xl font-bold text-slate-900">
-                    {numFmt.format(z.total_count)}
-                  </p>
-                  <p className="text-xs text-slate-500">
-                    {z.avg_count_raw.toFixed(2)} кадр тутмын дундаж · {share.toFixed(1)}%
-                    эзлэх хувь · {numFmt.format(z.sample_count)} түүвэр
-                  </p>
-                </div>
-              );
-            })}
-        </div>
-      </section> */}
-
-      {/* ── 6. Dwell Percentiles by Role ───────────────────────── */}
+      {/* ═══════════ 5. Dwell Percentiles ═══════════ */}
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <h2 className="text-base font-semibold text-slate-900">
           Дундаж үйлчлүүлсэн хугацаа
@@ -455,9 +498,7 @@ export default async function DashboardPage() {
                     <td className="py-2 pr-4 text-right">
                       {fmtDur(d.p95_seconds)}
                     </td>
-                    <td className="py-2 text-right">
-                      {fmtDur(d.max_seconds)}
-                    </td>
+                    <td className="py-2 text-right">{fmtDur(d.max_seconds)}</td>
                   </tr>
                 );
               })}
