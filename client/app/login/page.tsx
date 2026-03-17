@@ -2,11 +2,11 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50">
       <div className="w-full max-w-sm rounded-lg border border-slate-200 bg-white p-8 shadow">
-        <h1 className="mb-6 text-2xl font-bold text-center">Sign In</h1>
+        <h1 className="mb-6 text-2xl font-bold text-center">Нэвтрэх</h1>
         <form className="space-y-4">
           <div>
             <label className="block mb-1 text-sm font-medium" htmlFor="email">
-              Email
+              И-мэйл
             </label>
             <input
               id="email"
@@ -17,7 +17,7 @@ export default function LoginPage() {
           </div>
           <div>
             <label className="block mb-1 text-sm font-medium" htmlFor="password">
-              Password
+              Нууц үг
             </label>
             <input
               id="password"
@@ -30,12 +30,12 @@ export default function LoginPage() {
             type="submit"
             className="w-full rounded bg-blue-600 py-2 font-semibold text-white hover:bg-blue-700 transition"
           >
-            Sign In
+            Нэвтрэх
           </button>
         </form>
         <div className="mt-4 text-center">
           <a href="#" className="text-sm text-blue-600 hover:underline">
-            Forgot Password?
+            Нууц үгээ мартсан уу?
           </a>
         </div>
       </div>
