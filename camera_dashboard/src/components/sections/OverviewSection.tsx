@@ -1,113 +1,111 @@
-import { useMemo } from "react";
-import { useDashboardStore } from "@/store/dashboardStore";
+import { useMemo, useState } from "react";
 import { StatCard } from "@/components/cards/StatCard";
 import { CustomerFlowChart } from "@/components/charts/CustomerFlowChart";
-import { MetricAlert } from "@/components/alerts/MetricAlert";
 import { Users, UserCheck, Clock, Activity } from "lucide-react";
-import { formatTime } from "@/lib/utils";
+import { formatTime, formatPercentage } from "@/lib/utils";
+import {
+  getOverviewDayOptions,
+  getHourlyPeopleMaxSeries,
+  getOverviewKpis,
+  type OverviewDayKey,
+} from "@/lib/analyticsBundle";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function OverviewSection() {
-  const { tellers, hallMetrics } = useDashboardStore();
+  const dayOptions = useMemo(() => getOverviewDayOptions(), []);
+  const [dayKey, setDayKey] = useState<OverviewDayKey>("overall");
 
-  const stats = useMemo(() => {
-    const activeTellers = tellers.filter((t) => t.isActive).length;
-    const totalCustomers = tellers.reduce(
-      (sum, t) => sum + t.customersServed,
-      0,
-    );
-    const avgServiceTime = Math.round(
-      tellers.reduce((sum, t) => sum + t.averageServiceTime, 0) /
-        tellers.length,
-    );
-    const avgUtilization = Math.round(
-      tellers.reduce((sum, t) => sum + t.utilization, 0) / tellers.length,
-    );
+  const kpis = useMemo(() => getOverviewKpis(dayKey), [dayKey]);
 
-    return {
-      activeTellers,
-      totalCustomers,
-      avgServiceTime,
-      avgUtilization,
-    };
-  }, [tellers]);
-
-  const alerts = useMemo(() => {
-    const alertsList = [];
-
-    if (hallMetrics.peopleInHall > 40) {
-      alertsList.push({
-        type: "warning" as const,
-        message: `Танхимд нийт ${hallMetrics.peopleInHall} хүн байна`,
-      });
-    }
-
-    // if (stats.avgUtilization < 70) {
-    //   alertsList.push({
-    //     type: 'critical' as const,
-    //     message: `Low average utilization: ${stats.avgUtilization}% (target: 70%+)`,
-    //   });
-    // }
-
-    const overworkedTellers = tellers.filter((t) => t.utilization >= 95);
-    if (overworkedTellers.length > 0) {
-      alertsList.push({
-        type: "warning" as const,
-        message: `${overworkedTellers.length} ажилтны ачаалал 95%+ байна — ачааллыг тэнцвэржүүлэхийг зөвлөе`,
-      });
-    }
-
-    return alertsList;
-  }, [hallMetrics, tellers]);
+  const hourlyChartPoints = useMemo(() => {
+    const series = getHourlyPeopleMaxSeries(dayKey);
+    return series.map((p) => ({ label: p.label, count: p.maxPeople }));
+  }, [dayKey]);
 
   return (
     <div className="space-y-8">
-      {/* Overview Stats */}
-      <div>
-        <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
           Тойм мэдээлэл
         </h2>
+        <Tabs
+          value={dayKey}
+          onValueChange={(v) => setDayKey(v as OverviewDayKey)}
+          className="w-full sm:w-auto"
+        >
+          <TabsList className="flex h-auto w-full flex-wrap justify-start gap-1 bg-muted/80 p-1">
+            {dayOptions.map((opt) => (
+              <TabsTrigger
+                key={opt.key}
+                value={opt.key}
+                className="shrink-0 px-3 text-xs sm:text-sm"
+              >
+                {opt.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
+      </div>
+
+      <p className="text-sm text-slate-500 dark:text-slate-400">
+        {kpis.referenceNote}
+      </p>
+
+      {/* Overview Stats — analytics.json (өдөр / нийт) */}
+      <div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard
             title="Оргил цаг"
-            value={hallMetrics.peopleInHall}
+            value={kpis.peakPeopleMax}
             icon={Activity}
             iconColor="text-purple-600 dark:text-purple-400"
             iconBgColor="bg-purple-100 dark:bg-purple-900/20"
-            subtitle="Одоогийн тоо"
+            subtitle={`Снапшот: ${kpis.peakHourLabel} (цагийн хамгийн их)`}
           />
           <StatCard
             title="Дундаж үйлчлүүлсэн хугацаа"
-            value={formatTime(stats.avgServiceTime)}
+            value={formatTime(kpis.avgCustomerDwellSeconds)}
             icon={Clock}
             iconColor="text-amber-600 dark:text-amber-400"
             iconBgColor="bg-amber-100 dark:bg-amber-900/20"
-            subtitle="Бүх ажилтнуудын дунд"
+            subtitle="Сегментийн дундаж (zone events)"
           />
           <StatCard
             title="Танхимд байгаа хүмүүс"
-            value={stats.totalCustomers}
+            value={kpis.storeHallUniqueVisitors}
             icon={Users}
             iconColor="text-blue-600 dark:text-blue-400"
             iconBgColor="bg-blue-100 dark:bg-blue-900/20"
-            subtitle="Өнөөдрийн хамгийн өндөр"
+            subtitle={
+              dayKey === "overall"
+                ? "Дэлгүүр танхим — өдрийн дундаж (давхцуулахгүй/өдөр)"
+                : "Дэлгүүр танхим — өдрийн давхцуулахгүй"
+            }
           />
           <StatCard
             title="Касс хүнтэй байсан хувь"
-            value={stats.activeTellers}
+            value={formatPercentage(kpis.counterStaffedPct)}
             icon={UserCheck}
             iconColor="text-emerald-600 dark:text-emerald-400"
             iconBgColor="bg-emerald-100 dark:bg-emerald-900/20"
-            subtitle={`Нийт ${tellers.length}-с`}
+            subtitle="Counter staffing (сегментийн хувь)"
           />
         </div>
       </div>
 
-      {/* Customer Flow */}
+      {/* Customer Flow — snapshot hourly max */}
       <div>
         <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">
           Харилцагчдын идэвхтэй цаг
         </h2>
-        <CustomerFlowChart />
+        <p className="mb-3 text-sm text-slate-500 dark:text-slate-400">
+          Снапшот CSV-аас: цаг бүрт хамгийн их хүний тоо
+          {dayKey === "overall"
+            ? " (өдөр бүрийн ижил цагийн дээд утгуудын дээд). "
+            : ". "}
+          Үзүүлэлт: харилцагчдын идэвхтэй цагийг илэрхийлнэ.
+        </p>
+        <CustomerFlowChart hourlySnapshotPoints={hourlyChartPoints} />
       </div>
     </div>
   );

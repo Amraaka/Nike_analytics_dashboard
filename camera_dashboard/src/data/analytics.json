@@ -1,0 +1,1749 @@
+{
+  "meta": {
+    "schemaVersion": "2.0",
+    "referenceDateRange": {
+      "start": "2026-03-01",
+      "end": "2026-03-04"
+    },
+    "bundleDateSuffixes": [
+      "20260301",
+      "20260302",
+      "20260303",
+      "20260304"
+    ],
+    "inputs": {
+      "counterStaffing": [
+        "counter_staffing_20260301.csv",
+        "counter_staffing_20260302.csv",
+        "counter_staffing_20260303.csv",
+        "counter_staffing_20260304.csv"
+      ],
+      "snapshots": [
+        "snapshots_20260301.csv",
+        "snapshots_20260302.csv",
+        "snapshots_20260303.csv",
+        "snapshots_20260304.csv"
+      ],
+      "zoneEvents": [
+        "zone_events_20260301.csv",
+        "zone_events_20260302.csv",
+        "zone_events_20260303.csv",
+        "zone_events_20260304.csv"
+      ]
+    },
+    "generatedAtUtc": "2026-03-22T11:08:06Z"
+  },
+  "definitions": {
+    "counterStaffingDuration": "Time in previous_state before each transition; duplicate rows dropped; new_state 'end' excluded. Summary totals sum full duration_seconds. Hourly series prorates each segment across clock hours.",
+    "snapshotsPeopleColumn": "Only the people column. max and min include all readings; avgExcludingZeros is the mean where people is not 0.",
+    "zoneEventsUniqueVisitors": "Distinct person_id where role is customer, union across all zones for the day (one count per person).",
+    "zoneEventsCustomerDwell": "Per event segment duration_seconds for customer rows (multiple segments per person possible)."
+  },
+  "counterStaffing": {
+    "summary": {
+      "staffedSeconds": 93100.16,
+      "unstaffedSeconds": 87803.76,
+      "totalSegmentSeconds": 180903.92,
+      "staffedPct": 51.46,
+      "unstaffedPct": 48.54
+    },
+    "hourly": [
+      {
+        "hour": 9,
+        "label": "09:00–09:59",
+        "staffedSeconds": 2606.64,
+        "unstaffedSeconds": 11793.04,
+        "staffedPct": 18.1,
+        "unstaffedPct": 81.9
+      },
+      {
+        "hour": 10,
+        "label": "10:00–10:59",
+        "staffedSeconds": 3610.68,
+        "unstaffedSeconds": 10789.32,
+        "staffedPct": 25.07,
+        "unstaffedPct": 74.93
+      },
+      {
+        "hour": 11,
+        "label": "11:00–11:59",
+        "staffedSeconds": 7549.92,
+        "unstaffedSeconds": 6850.08,
+        "staffedPct": 52.43,
+        "unstaffedPct": 47.57
+      },
+      {
+        "hour": 12,
+        "label": "12:00–12:59",
+        "staffedSeconds": 8296.6,
+        "unstaffedSeconds": 6103.4,
+        "staffedPct": 57.62,
+        "unstaffedPct": 42.38
+      },
+      {
+        "hour": 13,
+        "label": "13:00–13:59",
+        "staffedSeconds": 7505.92,
+        "unstaffedSeconds": 6894.08,
+        "staffedPct": 52.12,
+        "unstaffedPct": 47.88
+      },
+      {
+        "hour": 14,
+        "label": "14:00–14:59",
+        "staffedSeconds": 6549.76,
+        "unstaffedSeconds": 7850.24,
+        "staffedPct": 45.48,
+        "unstaffedPct": 54.52
+      },
+      {
+        "hour": 15,
+        "label": "15:00–15:59",
+        "staffedSeconds": 8455.8,
+        "unstaffedSeconds": 5944.2,
+        "staffedPct": 58.72,
+        "unstaffedPct": 41.28
+      },
+      {
+        "hour": 16,
+        "label": "16:00–16:59",
+        "staffedSeconds": 8759.24,
+        "unstaffedSeconds": 5640.76,
+        "staffedPct": 60.83,
+        "unstaffedPct": 39.17
+      },
+      {
+        "hour": 17,
+        "label": "17:00–17:59",
+        "staffedSeconds": 8717.6,
+        "unstaffedSeconds": 5682.4,
+        "staffedPct": 60.54,
+        "unstaffedPct": 39.46
+      },
+      {
+        "hour": 18,
+        "label": "18:00–18:59",
+        "staffedSeconds": 9084.04,
+        "unstaffedSeconds": 5315.96,
+        "staffedPct": 63.08,
+        "unstaffedPct": 36.92
+      },
+      {
+        "hour": 19,
+        "label": "19:00–19:59",
+        "staffedSeconds": 8721.08,
+        "unstaffedSeconds": 5678.92,
+        "staffedPct": 60.56,
+        "unstaffedPct": 39.44
+      },
+      {
+        "hour": 20,
+        "label": "20:00–20:59",
+        "staffedSeconds": 8730.8,
+        "unstaffedSeconds": 5669.2,
+        "staffedPct": 60.63,
+        "unstaffedPct": 39.37
+      },
+      {
+        "hour": 21,
+        "label": "21:00–21:59",
+        "staffedSeconds": 4512.08,
+        "unstaffedSeconds": 3592.16,
+        "staffedPct": 55.68,
+        "unstaffedPct": 44.32
+      }
+    ],
+    "perDay": [
+      {
+        "referenceDate": "2026-03-01",
+        "summary": {
+          "staffedSeconds": 24812.56,
+          "unstaffedSeconds": 21065.72,
+          "totalSegmentSeconds": 45878.28,
+          "staffedPct": 54.08,
+          "unstaffedPct": 45.92
+        },
+        "hourly": [
+          {
+            "hour": 9,
+            "label": "09:00–09:59",
+            "staffedSeconds": 566.72,
+            "unstaffedSeconds": 3033.2,
+            "staffedPct": 15.74,
+            "unstaffedPct": 84.26
+          },
+          {
+            "hour": 10,
+            "label": "10:00–10:59",
+            "staffedSeconds": 392.04,
+            "unstaffedSeconds": 3207.96,
+            "staffedPct": 10.89,
+            "unstaffedPct": 89.11
+          },
+          {
+            "hour": 11,
+            "label": "11:00–11:59",
+            "staffedSeconds": 1837.8,
+            "unstaffedSeconds": 1762.2,
+            "staffedPct": 51.05,
+            "unstaffedPct": 48.95
+          },
+          {
+            "hour": 12,
+            "label": "12:00–12:59",
+            "staffedSeconds": 2386.4,
+            "unstaffedSeconds": 1213.6,
+            "staffedPct": 66.29,
+            "unstaffedPct": 33.71
+          },
+          {
+            "hour": 13,
+            "label": "13:00–13:59",
+            "staffedSeconds": 2097.28,
+            "unstaffedSeconds": 1502.72,
+            "staffedPct": 58.26,
+            "unstaffedPct": 41.74
+          },
+          {
+            "hour": 14,
+            "label": "14:00–14:59",
+            "staffedSeconds": 1806.0,
+            "unstaffedSeconds": 1794.0,
+            "staffedPct": 50.17,
+            "unstaffedPct": 49.83
+          },
+          {
+            "hour": 15,
+            "label": "15:00–15:59",
+            "staffedSeconds": 2289.68,
+            "unstaffedSeconds": 1310.32,
+            "staffedPct": 63.6,
+            "unstaffedPct": 36.4
+          },
+          {
+            "hour": 16,
+            "label": "16:00–16:59",
+            "staffedSeconds": 2500.96,
+            "unstaffedSeconds": 1099.04,
+            "staffedPct": 69.47,
+            "unstaffedPct": 30.53
+          },
+          {
+            "hour": 17,
+            "label": "17:00–17:59",
+            "staffedSeconds": 2224.28,
+            "unstaffedSeconds": 1375.72,
+            "staffedPct": 61.79,
+            "unstaffedPct": 38.21
+          },
+          {
+            "hour": 18,
+            "label": "18:00–18:59",
+            "staffedSeconds": 2465.44,
+            "unstaffedSeconds": 1134.56,
+            "staffedPct": 68.48,
+            "unstaffedPct": 31.52
+          },
+          {
+            "hour": 19,
+            "label": "19:00–19:59",
+            "staffedSeconds": 2316.32,
+            "unstaffedSeconds": 1283.68,
+            "staffedPct": 64.34,
+            "unstaffedPct": 35.66
+          },
+          {
+            "hour": 20,
+            "label": "20:00–20:59",
+            "staffedSeconds": 2730.48,
+            "unstaffedSeconds": 869.52,
+            "staffedPct": 75.85,
+            "unstaffedPct": 24.15
+          },
+          {
+            "hour": 21,
+            "label": "21:00–21:59",
+            "staffedSeconds": 1199.16,
+            "unstaffedSeconds": 1479.2,
+            "staffedPct": 44.77,
+            "unstaffedPct": 55.23
+          }
+        ]
+      },
+      {
+        "referenceDate": "2026-03-02",
+        "summary": {
+          "staffedSeconds": 20778.76,
+          "unstaffedSeconds": 23985.04,
+          "totalSegmentSeconds": 44763.8,
+          "staffedPct": 46.42,
+          "unstaffedPct": 53.58
+        },
+        "hourly": [
+          {
+            "hour": 9,
+            "label": "09:00–09:59",
+            "staffedSeconds": 454.68,
+            "unstaffedSeconds": 3145.24,
+            "staffedPct": 12.63,
+            "unstaffedPct": 87.37
+          },
+          {
+            "hour": 10,
+            "label": "10:00–10:59",
+            "staffedSeconds": 830.44,
+            "unstaffedSeconds": 2769.56,
+            "staffedPct": 23.07,
+            "unstaffedPct": 76.93
+          },
+          {
+            "hour": 11,
+            "label": "11:00–11:59",
+            "staffedSeconds": 2105.92,
+            "unstaffedSeconds": 1494.08,
+            "staffedPct": 58.5,
+            "unstaffedPct": 41.5
+          },
+          {
+            "hour": 12,
+            "label": "12:00–12:59",
+            "staffedSeconds": 2574.4,
+            "unstaffedSeconds": 1025.6,
+            "staffedPct": 71.51,
+            "unstaffedPct": 28.49
+          },
+          {
+            "hour": 13,
+            "label": "13:00–13:59",
+            "staffedSeconds": 1688.56,
+            "unstaffedSeconds": 1911.44,
+            "staffedPct": 46.9,
+            "unstaffedPct": 53.1
+          },
+          {
+            "hour": 14,
+            "label": "14:00–14:59",
+            "staffedSeconds": 1602.36,
+            "unstaffedSeconds": 1997.64,
+            "staffedPct": 44.51,
+            "unstaffedPct": 55.49
+          },
+          {
+            "hour": 15,
+            "label": "15:00–15:59",
+            "staffedSeconds": 1662.52,
+            "unstaffedSeconds": 1937.48,
+            "staffedPct": 46.18,
+            "unstaffedPct": 53.82
+          },
+          {
+            "hour": 16,
+            "label": "16:00–16:59",
+            "staffedSeconds": 1489.4,
+            "unstaffedSeconds": 2110.6,
+            "staffedPct": 41.37,
+            "unstaffedPct": 58.63
+          },
+          {
+            "hour": 17,
+            "label": "17:00–17:59",
+            "staffedSeconds": 2150.0,
+            "unstaffedSeconds": 1450.0,
+            "staffedPct": 59.72,
+            "unstaffedPct": 40.28
+          },
+          {
+            "hour": 18,
+            "label": "18:00–18:59",
+            "staffedSeconds": 1860.44,
+            "unstaffedSeconds": 1739.56,
+            "staffedPct": 51.68,
+            "unstaffedPct": 48.32
+          },
+          {
+            "hour": 19,
+            "label": "19:00–19:59",
+            "staffedSeconds": 2051.32,
+            "unstaffedSeconds": 1548.68,
+            "staffedPct": 56.98,
+            "unstaffedPct": 43.02
+          },
+          {
+            "hour": 20,
+            "label": "20:00–20:59",
+            "staffedSeconds": 1480.4,
+            "unstaffedSeconds": 2119.6,
+            "staffedPct": 41.12,
+            "unstaffedPct": 58.88
+          },
+          {
+            "hour": 21,
+            "label": "21:00–21:59",
+            "staffedSeconds": 828.32,
+            "unstaffedSeconds": 735.56,
+            "staffedPct": 52.97,
+            "unstaffedPct": 47.03
+          }
+        ]
+      },
+      {
+        "referenceDate": "2026-03-03",
+        "summary": {
+          "staffedSeconds": 22230.84,
+          "unstaffedSeconds": 23067.72,
+          "totalSegmentSeconds": 45298.56,
+          "staffedPct": 49.08,
+          "unstaffedPct": 50.92
+        },
+        "hourly": [
+          {
+            "hour": 9,
+            "label": "09:00–09:59",
+            "staffedSeconds": 412.8,
+            "unstaffedSeconds": 3187.12,
+            "staffedPct": 11.47,
+            "unstaffedPct": 88.53
+          },
+          {
+            "hour": 10,
+            "label": "10:00–10:59",
+            "staffedSeconds": 1341.12,
+            "unstaffedSeconds": 2258.88,
+            "staffedPct": 37.25,
+            "unstaffedPct": 62.75
+          },
+          {
+            "hour": 11,
+            "label": "11:00–11:59",
+            "staffedSeconds": 1357.64,
+            "unstaffedSeconds": 2242.36,
+            "staffedPct": 37.71,
+            "unstaffedPct": 62.29
+          },
+          {
+            "hour": 12,
+            "label": "12:00–12:59",
+            "staffedSeconds": 1285.68,
+            "unstaffedSeconds": 2314.32,
+            "staffedPct": 35.71,
+            "unstaffedPct": 64.29
+          },
+          {
+            "hour": 13,
+            "label": "13:00–13:59",
+            "staffedSeconds": 1737.04,
+            "unstaffedSeconds": 1862.96,
+            "staffedPct": 48.25,
+            "unstaffedPct": 51.75
+          },
+          {
+            "hour": 14,
+            "label": "14:00–14:59",
+            "staffedSeconds": 1965.16,
+            "unstaffedSeconds": 1634.84,
+            "staffedPct": 54.59,
+            "unstaffedPct": 45.41
+          },
+          {
+            "hour": 15,
+            "label": "15:00–15:59",
+            "staffedSeconds": 2574.08,
+            "unstaffedSeconds": 1025.92,
+            "staffedPct": 71.5,
+            "unstaffedPct": 28.5
+          },
+          {
+            "hour": 16,
+            "label": "16:00–16:59",
+            "staffedSeconds": 1929.6,
+            "unstaffedSeconds": 1670.4,
+            "staffedPct": 53.6,
+            "unstaffedPct": 46.4
+          },
+          {
+            "hour": 17,
+            "label": "17:00–17:59",
+            "staffedSeconds": 1767.68,
+            "unstaffedSeconds": 1832.32,
+            "staffedPct": 49.1,
+            "unstaffedPct": 50.9
+          },
+          {
+            "hour": 18,
+            "label": "18:00–18:59",
+            "staffedSeconds": 2614.52,
+            "unstaffedSeconds": 985.48,
+            "staffedPct": 72.63,
+            "unstaffedPct": 27.37
+          },
+          {
+            "hour": 19,
+            "label": "19:00–19:59",
+            "staffedSeconds": 2119.52,
+            "unstaffedSeconds": 1480.48,
+            "staffedPct": 58.88,
+            "unstaffedPct": 41.12
+          },
+          {
+            "hour": 20,
+            "label": "20:00–20:59",
+            "staffedSeconds": 2024.88,
+            "unstaffedSeconds": 1575.12,
+            "staffedPct": 56.25,
+            "unstaffedPct": 43.75
+          },
+          {
+            "hour": 21,
+            "label": "21:00–21:59",
+            "staffedSeconds": 1101.12,
+            "unstaffedSeconds": 997.52,
+            "staffedPct": 52.47,
+            "unstaffedPct": 47.53
+          }
+        ]
+      },
+      {
+        "referenceDate": "2026-03-04",
+        "summary": {
+          "staffedSeconds": 25278.0,
+          "unstaffedSeconds": 19685.28,
+          "totalSegmentSeconds": 44963.28,
+          "staffedPct": 56.22,
+          "unstaffedPct": 43.78
+        },
+        "hourly": [
+          {
+            "hour": 9,
+            "label": "09:00–09:59",
+            "staffedSeconds": 1172.44,
+            "unstaffedSeconds": 2427.48,
+            "staffedPct": 32.57,
+            "unstaffedPct": 67.43
+          },
+          {
+            "hour": 10,
+            "label": "10:00–10:59",
+            "staffedSeconds": 1047.08,
+            "unstaffedSeconds": 2552.92,
+            "staffedPct": 29.09,
+            "unstaffedPct": 70.91
+          },
+          {
+            "hour": 11,
+            "label": "11:00–11:59",
+            "staffedSeconds": 2248.56,
+            "unstaffedSeconds": 1351.44,
+            "staffedPct": 62.46,
+            "unstaffedPct": 37.54
+          },
+          {
+            "hour": 12,
+            "label": "12:00–12:59",
+            "staffedSeconds": 2050.12,
+            "unstaffedSeconds": 1549.88,
+            "staffedPct": 56.95,
+            "unstaffedPct": 43.05
+          },
+          {
+            "hour": 13,
+            "label": "13:00–13:59",
+            "staffedSeconds": 1983.04,
+            "unstaffedSeconds": 1616.96,
+            "staffedPct": 55.08,
+            "unstaffedPct": 44.92
+          },
+          {
+            "hour": 14,
+            "label": "14:00–14:59",
+            "staffedSeconds": 1176.24,
+            "unstaffedSeconds": 2423.76,
+            "staffedPct": 32.67,
+            "unstaffedPct": 67.33
+          },
+          {
+            "hour": 15,
+            "label": "15:00–15:59",
+            "staffedSeconds": 1929.52,
+            "unstaffedSeconds": 1670.48,
+            "staffedPct": 53.6,
+            "unstaffedPct": 46.4
+          },
+          {
+            "hour": 16,
+            "label": "16:00–16:59",
+            "staffedSeconds": 2839.28,
+            "unstaffedSeconds": 760.72,
+            "staffedPct": 78.87,
+            "unstaffedPct": 21.13
+          },
+          {
+            "hour": 17,
+            "label": "17:00–17:59",
+            "staffedSeconds": 2575.64,
+            "unstaffedSeconds": 1024.36,
+            "staffedPct": 71.55,
+            "unstaffedPct": 28.45
+          },
+          {
+            "hour": 18,
+            "label": "18:00–18:59",
+            "staffedSeconds": 2143.64,
+            "unstaffedSeconds": 1456.36,
+            "staffedPct": 59.55,
+            "unstaffedPct": 40.45
+          },
+          {
+            "hour": 19,
+            "label": "19:00–19:59",
+            "staffedSeconds": 2233.92,
+            "unstaffedSeconds": 1366.08,
+            "staffedPct": 62.05,
+            "unstaffedPct": 37.95
+          },
+          {
+            "hour": 20,
+            "label": "20:00–20:59",
+            "staffedSeconds": 2495.04,
+            "unstaffedSeconds": 1104.96,
+            "staffedPct": 69.31,
+            "unstaffedPct": 30.69
+          },
+          {
+            "hour": 21,
+            "label": "21:00–21:59",
+            "staffedSeconds": 1383.48,
+            "unstaffedSeconds": 379.88,
+            "staffedPct": 78.46,
+            "unstaffedPct": 21.54
+          }
+        ]
+      }
+    ]
+  },
+  "snapshots": {
+    "dayCount": 4,
+    "referenceDateRange": {
+      "start": "2026-03-01",
+      "end": "2026-03-04"
+    },
+    "days": [
+      {
+        "referenceDate": "2026-03-01",
+        "metric": {
+          "sourceColumn": "people",
+          "note": "Only the `people` column is used. max/min include all readings; avg_excluding_zeros is the mean of values where people != 0."
+        },
+        "day": {
+          "totalReadings": 7229,
+          "peopleMax": 16.0,
+          "peopleMin": 0.0,
+          "peopleAvgExcludingZeros": 3.67,
+          "nonzeroReadings": 5491
+        },
+        "hourly": [
+          {
+            "hour": 9,
+            "label": "09:00–09:59",
+            "people": {
+              "max": 5.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.141,
+              "readingsCount": 457,
+              "nonzeroCount": 234
+            }
+          },
+          {
+            "hour": 10,
+            "label": "10:00–10:59",
+            "people": {
+              "max": 9.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.517,
+              "readingsCount": 482,
+              "nonzeroCount": 269
+            }
+          },
+          {
+            "hour": 11,
+            "label": "11:00–11:59",
+            "people": {
+              "max": 11.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.9,
+              "readingsCount": 537,
+              "nonzeroCount": 381
+            }
+          },
+          {
+            "hour": 12,
+            "label": "12:00–12:59",
+            "people": {
+              "max": 12.0,
+              "min": 0.0,
+              "avgExcludingZeros": 3.571,
+              "readingsCount": 590,
+              "nonzeroCount": 497
+            }
+          },
+          {
+            "hour": 13,
+            "label": "13:00–13:59",
+            "people": {
+              "max": 14.0,
+              "min": 0.0,
+              "avgExcludingZeros": 4.639,
+              "readingsCount": 635,
+              "nonzeroCount": 527
+            }
+          },
+          {
+            "hour": 14,
+            "label": "14:00–14:59",
+            "people": {
+              "max": 16.0,
+              "min": 0.0,
+              "avgExcludingZeros": 4.717,
+              "readingsCount": 670,
+              "nonzeroCount": 541
+            }
+          },
+          {
+            "hour": 15,
+            "label": "15:00–15:59",
+            "people": {
+              "max": 13.0,
+              "min": 0.0,
+              "avgExcludingZeros": 4.215,
+              "readingsCount": 667,
+              "nonzeroCount": 540
+            }
+          },
+          {
+            "hour": 16,
+            "label": "16:00–16:59",
+            "people": {
+              "max": 14.0,
+              "min": 0.0,
+              "avgExcludingZeros": 4.158,
+              "readingsCount": 805,
+              "nonzeroCount": 646
+            }
+          },
+          {
+            "hour": 17,
+            "label": "17:00–17:59",
+            "people": {
+              "max": 13.0,
+              "min": 0.0,
+              "avgExcludingZeros": 4.206,
+              "readingsCount": 626,
+              "nonzeroCount": 495
+            }
+          },
+          {
+            "hour": 18,
+            "label": "18:00–18:59",
+            "people": {
+              "max": 12.0,
+              "min": 0.0,
+              "avgExcludingZeros": 3.588,
+              "readingsCount": 573,
+              "nonzeroCount": 478
+            }
+          },
+          {
+            "hour": 19,
+            "label": "19:00–19:59",
+            "people": {
+              "max": 13.0,
+              "min": 0.0,
+              "avgExcludingZeros": 3.38,
+              "readingsCount": 509,
+              "nonzeroCount": 389
+            }
+          },
+          {
+            "hour": 20,
+            "label": "20:00–20:59",
+            "people": {
+              "max": 11.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.188,
+              "readingsCount": 478,
+              "nonzeroCount": 382
+            }
+          },
+          {
+            "hour": 21,
+            "label": "21:00–21:59",
+            "people": {
+              "max": 6.0,
+              "min": 0.0,
+              "avgExcludingZeros": 1.661,
+              "readingsCount": 200,
+              "nonzeroCount": 112
+            }
+          }
+        ],
+        "peakHour": {
+          "hour": 14,
+          "label": "14:00–14:59",
+          "maxPeople": 16.0,
+          "avgPeopleExcludingZeros": 4.717
+        }
+      },
+      {
+        "referenceDate": "2026-03-02",
+        "metric": {
+          "sourceColumn": "people",
+          "note": "Only the `people` column is used. max/min include all readings; avg_excluding_zeros is the mean of values where people != 0."
+        },
+        "day": {
+          "totalReadings": 6310,
+          "peopleMax": 12.0,
+          "peopleMin": 0.0,
+          "peopleAvgExcludingZeros": 2.578,
+          "nonzeroReadings": 4365
+        },
+        "hourly": [
+          {
+            "hour": 9,
+            "label": "09:00–09:59",
+            "people": {
+              "max": 4.0,
+              "min": 0.0,
+              "avgExcludingZeros": 1.613,
+              "readingsCount": 458,
+              "nonzeroCount": 225
+            }
+          },
+          {
+            "hour": 10,
+            "label": "10:00–10:59",
+            "people": {
+              "max": 5.0,
+              "min": 0.0,
+              "avgExcludingZeros": 1.92,
+              "readingsCount": 485,
+              "nonzeroCount": 276
+            }
+          },
+          {
+            "hour": 11,
+            "label": "11:00–11:59",
+            "people": {
+              "max": 7.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.082,
+              "readingsCount": 553,
+              "nonzeroCount": 415
+            }
+          },
+          {
+            "hour": 12,
+            "label": "12:00–12:59",
+            "people": {
+              "max": 11.0,
+              "min": 0.0,
+              "avgExcludingZeros": 3.141,
+              "readingsCount": 577,
+              "nonzeroCount": 425
+            }
+          },
+          {
+            "hour": 13,
+            "label": "13:00–13:59",
+            "people": {
+              "max": 10.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.695,
+              "readingsCount": 527,
+              "nonzeroCount": 357
+            }
+          },
+          {
+            "hour": 14,
+            "label": "14:00–14:59",
+            "people": {
+              "max": 8.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.584,
+              "readingsCount": 536,
+              "nonzeroCount": 377
+            }
+          },
+          {
+            "hour": 15,
+            "label": "15:00–15:59",
+            "people": {
+              "max": 8.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.872,
+              "readingsCount": 570,
+              "nonzeroCount": 422
+            }
+          },
+          {
+            "hour": 16,
+            "label": "16:00–16:59",
+            "people": {
+              "max": 7.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.507,
+              "readingsCount": 542,
+              "nonzeroCount": 383
+            }
+          },
+          {
+            "hour": 17,
+            "label": "17:00–17:59",
+            "people": {
+              "max": 11.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.718,
+              "readingsCount": 570,
+              "nonzeroCount": 464
+            }
+          },
+          {
+            "hour": 18,
+            "label": "18:00–18:59",
+            "people": {
+              "max": 10.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.754,
+              "readingsCount": 502,
+              "nonzeroCount": 333
+            }
+          },
+          {
+            "hour": 19,
+            "label": "19:00–19:59",
+            "people": {
+              "max": 12.0,
+              "min": 0.0,
+              "avgExcludingZeros": 3.039,
+              "readingsCount": 506,
+              "nonzeroCount": 384
+            }
+          },
+          {
+            "hour": 20,
+            "label": "20:00–20:59",
+            "people": {
+              "max": 8.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.445,
+              "readingsCount": 382,
+              "nonzeroCount": 227
+            }
+          },
+          {
+            "hour": 21,
+            "label": "21:00–21:59",
+            "people": {
+              "max": 4.0,
+              "min": 0.0,
+              "avgExcludingZeros": 1.961,
+              "readingsCount": 102,
+              "nonzeroCount": 77
+            }
+          }
+        ],
+        "peakHour": {
+          "hour": 19,
+          "label": "19:00–19:59",
+          "maxPeople": 12.0,
+          "avgPeopleExcludingZeros": 3.039
+        }
+      },
+      {
+        "referenceDate": "2026-03-03",
+        "metric": {
+          "sourceColumn": "people",
+          "note": "Only the `people` column is used. max/min include all readings; avg_excluding_zeros is the mean of values where people != 0."
+        },
+        "day": {
+          "totalReadings": 6476,
+          "peopleMax": 16.0,
+          "peopleMin": 0.0,
+          "peopleAvgExcludingZeros": 2.654,
+          "nonzeroReadings": 4543
+        },
+        "hourly": [
+          {
+            "hour": 9,
+            "label": "09:00–09:59",
+            "people": {
+              "max": 5.0,
+              "min": 0.0,
+              "avgExcludingZeros": 1.687,
+              "readingsCount": 444,
+              "nonzeroCount": 217
+            }
+          },
+          {
+            "hour": 10,
+            "label": "10:00–10:59",
+            "people": {
+              "max": 5.0,
+              "min": 0.0,
+              "avgExcludingZeros": 1.853,
+              "readingsCount": 507,
+              "nonzeroCount": 326
+            }
+          },
+          {
+            "hour": 11,
+            "label": "11:00–11:59",
+            "people": {
+              "max": 9.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.351,
+              "readingsCount": 506,
+              "nonzeroCount": 302
+            }
+          },
+          {
+            "hour": 12,
+            "label": "12:00–12:59",
+            "people": {
+              "max": 8.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.517,
+              "readingsCount": 533,
+              "nonzeroCount": 385
+            }
+          },
+          {
+            "hour": 13,
+            "label": "13:00–13:59",
+            "people": {
+              "max": 10.0,
+              "min": 0.0,
+              "avgExcludingZeros": 3.167,
+              "readingsCount": 551,
+              "nonzeroCount": 396
+            }
+          },
+          {
+            "hour": 14,
+            "label": "14:00–14:59",
+            "people": {
+              "max": 12.0,
+              "min": 0.0,
+              "avgExcludingZeros": 3.236,
+              "readingsCount": 576,
+              "nonzeroCount": 457
+            }
+          },
+          {
+            "hour": 15,
+            "label": "15:00–15:59",
+            "people": {
+              "max": 11.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.748,
+              "readingsCount": 562,
+              "nonzeroCount": 452
+            }
+          },
+          {
+            "hour": 16,
+            "label": "16:00–16:59",
+            "people": {
+              "max": 16.0,
+              "min": 0.0,
+              "avgExcludingZeros": 3.407,
+              "readingsCount": 558,
+              "nonzeroCount": 383
+            }
+          },
+          {
+            "hour": 17,
+            "label": "17:00–17:59",
+            "people": {
+              "max": 8.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.089,
+              "readingsCount": 525,
+              "nonzeroCount": 380
+            }
+          },
+          {
+            "hour": 18,
+            "label": "18:00–18:59",
+            "people": {
+              "max": 11.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.777,
+              "readingsCount": 585,
+              "nonzeroCount": 489
+            }
+          },
+          {
+            "hour": 19,
+            "label": "19:00–19:59",
+            "people": {
+              "max": 11.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.72,
+              "readingsCount": 486,
+              "nonzeroCount": 332
+            }
+          },
+          {
+            "hour": 20,
+            "label": "20:00–20:59",
+            "people": {
+              "max": 10.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.457,
+              "readingsCount": 433,
+              "nonzeroCount": 278
+            }
+          },
+          {
+            "hour": 21,
+            "label": "21:00–21:59",
+            "people": {
+              "max": 7.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.658,
+              "readingsCount": 210,
+              "nonzeroCount": 146
+            }
+          }
+        ],
+        "peakHour": {
+          "hour": 16,
+          "label": "16:00–16:59",
+          "maxPeople": 16.0,
+          "avgPeopleExcludingZeros": 3.407
+        }
+      },
+      {
+        "referenceDate": "2026-03-04",
+        "metric": {
+          "sourceColumn": "people",
+          "note": "Only the `people` column is used. max/min include all readings; avg_excluding_zeros is the mean of values where people != 0."
+        },
+        "day": {
+          "totalReadings": 6558,
+          "peopleMax": 12.0,
+          "peopleMin": 0.0,
+          "peopleAvgExcludingZeros": 2.648,
+          "nonzeroReadings": 4677
+        },
+        "hourly": [
+          {
+            "hour": 9,
+            "label": "09:00–09:59",
+            "people": {
+              "max": 5.0,
+              "min": 0.0,
+              "avgExcludingZeros": 1.594,
+              "readingsCount": 441,
+              "nonzeroCount": 239
+            }
+          },
+          {
+            "hour": 10,
+            "label": "10:00–10:59",
+            "people": {
+              "max": 6.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.087,
+              "readingsCount": 494,
+              "nonzeroCount": 300
+            }
+          },
+          {
+            "hour": 11,
+            "label": "11:00–11:59",
+            "people": {
+              "max": 6.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.146,
+              "readingsCount": 526,
+              "nonzeroCount": 356
+            }
+          },
+          {
+            "hour": 12,
+            "label": "12:00–12:59",
+            "people": {
+              "max": 9.0,
+              "min": 0.0,
+              "avgExcludingZeros": 3.06,
+              "readingsCount": 560,
+              "nonzeroCount": 431
+            }
+          },
+          {
+            "hour": 13,
+            "label": "13:00–13:59",
+            "people": {
+              "max": 8.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.699,
+              "readingsCount": 559,
+              "nonzeroCount": 419
+            }
+          },
+          {
+            "hour": 14,
+            "label": "14:00–14:59",
+            "people": {
+              "max": 9.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.698,
+              "readingsCount": 522,
+              "nonzeroCount": 321
+            }
+          },
+          {
+            "hour": 15,
+            "label": "15:00–15:59",
+            "people": {
+              "max": 10.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.934,
+              "readingsCount": 573,
+              "nonzeroCount": 441
+            }
+          },
+          {
+            "hour": 16,
+            "label": "16:00–16:59",
+            "people": {
+              "max": 10.0,
+              "min": 0.0,
+              "avgExcludingZeros": 3.122,
+              "readingsCount": 570,
+              "nonzeroCount": 425
+            }
+          },
+          {
+            "hour": 17,
+            "label": "17:00–17:59",
+            "people": {
+              "max": 12.0,
+              "min": 0.0,
+              "avgExcludingZeros": 3.822,
+              "readingsCount": 616,
+              "nonzeroCount": 500
+            }
+          },
+          {
+            "hour": 18,
+            "label": "18:00–18:59",
+            "people": {
+              "max": 8.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.192,
+              "readingsCount": 554,
+              "nonzeroCount": 447
+            }
+          },
+          {
+            "hour": 19,
+            "label": "19:00–19:59",
+            "people": {
+              "max": 8.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.243,
+              "readingsCount": 498,
+              "nonzeroCount": 374
+            }
+          },
+          {
+            "hour": 20,
+            "label": "20:00–20:59",
+            "people": {
+              "max": 10.0,
+              "min": 0.0,
+              "avgExcludingZeros": 2.338,
+              "readingsCount": 449,
+              "nonzeroCount": 293
+            }
+          },
+          {
+            "hour": 21,
+            "label": "21:00–21:59",
+            "people": {
+              "max": 6.0,
+              "min": 0.0,
+              "avgExcludingZeros": 1.985,
+              "readingsCount": 196,
+              "nonzeroCount": 131
+            }
+          }
+        ],
+        "peakHour": {
+          "hour": 17,
+          "label": "17:00–17:59",
+          "maxPeople": 12.0,
+          "avgPeopleExcludingZeros": 3.822
+        }
+      }
+    ]
+  },
+  "zoneEvents": {
+    "dayCount": 4,
+    "referenceDateRange": {
+      "start": "2026-03-01",
+      "end": "2026-03-04"
+    },
+    "days": [
+      {
+        "referenceDate": "2026-03-01",
+        "visitors": {
+          "uniqueCustomers": 3319
+        },
+        "customerSegmentDwellSeconds": {
+          "segmentCount": 6886,
+          "min": 1.0,
+          "mean": 1407.298,
+          "p50": 22.9,
+          "p90": 6315.2,
+          "p95": 8384.2,
+          "max": 10938.5
+        },
+        "zones": [
+          {
+            "zone": "store_hall",
+            "totalEvents": 5488,
+            "totalDwellSeconds": 7801505.2,
+            "uniqueVisitorsCustomers": 2454,
+            "avgDurationSeconds": 1421.557,
+            "dwellP50Seconds": 41.9
+          },
+          {
+            "zone": "other",
+            "totalEvents": 4208,
+            "totalDwellSeconds": 5548727.5,
+            "uniqueVisitorsCustomers": 1950,
+            "avgDurationSeconds": 1318.614,
+            "dwellP50Seconds": 16.2
+          },
+          {
+            "zone": "counter",
+            "totalEvents": 834,
+            "totalDwellSeconds": 473501.3,
+            "uniqueVisitorsCustomers": 282,
+            "avgDurationSeconds": 567.747,
+            "dwellP50Seconds": 304.8
+          }
+        ],
+        "zoneRanking": [
+          {
+            "rank": 1,
+            "zone": "store_hall",
+            "uniqueCustomers": 2454,
+            "totalEvents": 5488
+          },
+          {
+            "rank": 2,
+            "zone": "other",
+            "uniqueCustomers": 1950,
+            "totalEvents": 4208
+          },
+          {
+            "rank": 3,
+            "zone": "counter",
+            "uniqueCustomers": 282,
+            "totalEvents": 834
+          }
+        ],
+        "peakActivity": {
+          "byEventCount": {
+            "hour": 13,
+            "label": "13:00–13:59",
+            "events": 1412
+          },
+          "byUniquePeople": {
+            "hour": 16,
+            "label": "16:00–16:59",
+            "uniquePeople": 621
+          }
+        }
+      },
+      {
+        "referenceDate": "2026-03-02",
+        "visitors": {
+          "uniqueCustomers": 2132
+        },
+        "customerSegmentDwellSeconds": {
+          "segmentCount": 3892,
+          "min": 1.0,
+          "mean": 1398.175,
+          "p50": 32.5,
+          "p90": 5913.2,
+          "p95": 6714.6,
+          "max": 8802.3
+        },
+        "zones": [
+          {
+            "zone": "store_hall",
+            "totalEvents": 3106,
+            "totalDwellSeconds": 4367487.1,
+            "uniqueVisitorsCustomers": 1596,
+            "avgDurationSeconds": 1406.145,
+            "dwellP50Seconds": 54.3
+          },
+          {
+            "zone": "other",
+            "totalEvents": 2097,
+            "totalDwellSeconds": 2467205.8,
+            "uniqueVisitorsCustomers": 1148,
+            "avgDurationSeconds": 1176.541,
+            "dwellP50Seconds": 19.2
+          },
+          {
+            "zone": "counter",
+            "totalEvents": 490,
+            "totalDwellSeconds": 405802.2,
+            "uniqueVisitorsCustomers": 150,
+            "avgDurationSeconds": 828.168,
+            "dwellP50Seconds": 671.0
+          }
+        ],
+        "zoneRanking": [
+          {
+            "rank": 1,
+            "zone": "store_hall",
+            "uniqueCustomers": 1596,
+            "totalEvents": 3106
+          },
+          {
+            "rank": 2,
+            "zone": "other",
+            "uniqueCustomers": 1148,
+            "totalEvents": 2097
+          },
+          {
+            "rank": 3,
+            "zone": "counter",
+            "uniqueCustomers": 150,
+            "totalEvents": 490
+          }
+        ],
+        "peakActivity": {
+          "byEventCount": {
+            "hour": 19,
+            "label": "19:00–19:59",
+            "events": 672
+          },
+          "byUniquePeople": {
+            "hour": 15,
+            "label": "15:00–15:59",
+            "uniquePeople": 353
+          }
+        }
+      },
+      {
+        "referenceDate": "2026-03-03",
+        "visitors": {
+          "uniqueCustomers": 2164
+        },
+        "customerSegmentDwellSeconds": {
+          "segmentCount": 4052,
+          "min": 1.0,
+          "mean": 1255.779,
+          "p50": 31.1,
+          "p90": 5450.2,
+          "p95": 6728.5,
+          "max": 9277.2
+        },
+        "zones": [
+          {
+            "zone": "store_hall",
+            "totalEvents": 3218,
+            "totalDwellSeconds": 4195701.4,
+            "uniqueVisitorsCustomers": 1610,
+            "avgDurationSeconds": 1303.823,
+            "dwellP50Seconds": 56.9
+          },
+          {
+            "zone": "other",
+            "totalEvents": 2222,
+            "totalDwellSeconds": 2556827.5,
+            "uniqueVisitorsCustomers": 1235,
+            "avgDurationSeconds": 1150.687,
+            "dwellP50Seconds": 19.8
+          },
+          {
+            "zone": "counter",
+            "totalEvents": 522,
+            "totalDwellSeconds": 395894.6,
+            "uniqueVisitorsCustomers": 156,
+            "avgDurationSeconds": 758.419,
+            "dwellP50Seconds": 515.4
+          }
+        ],
+        "zoneRanking": [
+          {
+            "rank": 1,
+            "zone": "store_hall",
+            "uniqueCustomers": 1610,
+            "totalEvents": 3218
+          },
+          {
+            "rank": 2,
+            "zone": "other",
+            "uniqueCustomers": 1235,
+            "totalEvents": 2222
+          },
+          {
+            "rank": 3,
+            "zone": "counter",
+            "uniqueCustomers": 156,
+            "totalEvents": 522
+          }
+        ],
+        "peakActivity": {
+          "byEventCount": {
+            "hour": 14,
+            "label": "14:00–14:59",
+            "events": 741
+          },
+          "byUniquePeople": {
+            "hour": 14,
+            "label": "14:00–14:59",
+            "uniquePeople": 396
+          }
+        }
+      },
+      {
+        "referenceDate": "2026-03-04",
+        "visitors": {
+          "uniqueCustomers": 2256
+        },
+        "customerSegmentDwellSeconds": {
+          "segmentCount": 4162,
+          "min": 1.0,
+          "mean": 1229.52,
+          "p50": 32.8,
+          "p90": 5280.9,
+          "p95": 6189.8,
+          "max": 8441.6
+        },
+        "zones": [
+          {
+            "zone": "store_hall",
+            "totalEvents": 3174,
+            "totalDwellSeconds": 3877303.5,
+            "uniqueVisitorsCustomers": 1606,
+            "avgDurationSeconds": 1221.583,
+            "dwellP50Seconds": 57.0
+          },
+          {
+            "zone": "other",
+            "totalEvents": 2293,
+            "totalDwellSeconds": 2774332.7,
+            "uniqueVisitorsCustomers": 1368,
+            "avgDurationSeconds": 1209.914,
+            "dwellP50Seconds": 22.2
+          },
+          {
+            "zone": "counter",
+            "totalEvents": 502,
+            "totalDwellSeconds": 469958.5,
+            "uniqueVisitorsCustomers": 134,
+            "avgDurationSeconds": 936.172,
+            "dwellP50Seconds": 498.7
+          }
+        ],
+        "zoneRanking": [
+          {
+            "rank": 1,
+            "zone": "store_hall",
+            "uniqueCustomers": 1606,
+            "totalEvents": 3174
+          },
+          {
+            "rank": 2,
+            "zone": "other",
+            "uniqueCustomers": 1368,
+            "totalEvents": 2293
+          },
+          {
+            "rank": 3,
+            "zone": "counter",
+            "uniqueCustomers": 134,
+            "totalEvents": 502
+          }
+        ],
+        "peakActivity": {
+          "byEventCount": {
+            "hour": 17,
+            "label": "17:00–17:59",
+            "events": 770
+          },
+          "byUniquePeople": {
+            "hour": 17,
+            "label": "17:00–17:59",
+            "uniquePeople": 408
+          }
+        }
+      }
+    ]
+  },
+  "periodSummaries": {
+    "last7Days": {
+      "windowDaysCap": 7,
+      "daysIncluded": 4,
+      "referenceDateRange": {
+        "start": "2026-03-01",
+        "end": "2026-03-04"
+      },
+      "bundleDateSuffixesIncluded": [
+        "20260301",
+        "20260302",
+        "20260303",
+        "20260304"
+      ],
+      "note": "Uses the last up to 7 calendar days present in --dates. If you have fewer than 7 days of CSVs, this summarizes all available days in that tail.",
+      "counterStaffing": {
+        "summary": {
+          "staffedSeconds": 93100.16,
+          "unstaffedSeconds": 87803.76,
+          "totalSegmentSeconds": 180903.92,
+          "staffedPct": 51.46,
+          "unstaffedPct": 48.54
+        },
+        "hourly": [
+          {
+            "hour": 9,
+            "label": "09:00–09:59",
+            "staffedSeconds": 2606.64,
+            "unstaffedSeconds": 11793.04,
+            "staffedPct": 18.1,
+            "unstaffedPct": 81.9
+          },
+          {
+            "hour": 10,
+            "label": "10:00–10:59",
+            "staffedSeconds": 3610.68,
+            "unstaffedSeconds": 10789.32,
+            "staffedPct": 25.07,
+            "unstaffedPct": 74.93
+          },
+          {
+            "hour": 11,
+            "label": "11:00–11:59",
+            "staffedSeconds": 7549.92,
+            "unstaffedSeconds": 6850.08,
+            "staffedPct": 52.43,
+            "unstaffedPct": 47.57
+          },
+          {
+            "hour": 12,
+            "label": "12:00–12:59",
+            "staffedSeconds": 8296.6,
+            "unstaffedSeconds": 6103.4,
+            "staffedPct": 57.62,
+            "unstaffedPct": 42.38
+          },
+          {
+            "hour": 13,
+            "label": "13:00–13:59",
+            "staffedSeconds": 7505.92,
+            "unstaffedSeconds": 6894.08,
+            "staffedPct": 52.12,
+            "unstaffedPct": 47.88
+          },
+          {
+            "hour": 14,
+            "label": "14:00–14:59",
+            "staffedSeconds": 6549.76,
+            "unstaffedSeconds": 7850.24,
+            "staffedPct": 45.48,
+            "unstaffedPct": 54.52
+          },
+          {
+            "hour": 15,
+            "label": "15:00–15:59",
+            "staffedSeconds": 8455.8,
+            "unstaffedSeconds": 5944.2,
+            "staffedPct": 58.72,
+            "unstaffedPct": 41.28
+          },
+          {
+            "hour": 16,
+            "label": "16:00–16:59",
+            "staffedSeconds": 8759.24,
+            "unstaffedSeconds": 5640.76,
+            "staffedPct": 60.83,
+            "unstaffedPct": 39.17
+          },
+          {
+            "hour": 17,
+            "label": "17:00–17:59",
+            "staffedSeconds": 8717.6,
+            "unstaffedSeconds": 5682.4,
+            "staffedPct": 60.54,
+            "unstaffedPct": 39.46
+          },
+          {
+            "hour": 18,
+            "label": "18:00–18:59",
+            "staffedSeconds": 9084.04,
+            "unstaffedSeconds": 5315.96,
+            "staffedPct": 63.08,
+            "unstaffedPct": 36.92
+          },
+          {
+            "hour": 19,
+            "label": "19:00–19:59",
+            "staffedSeconds": 8721.08,
+            "unstaffedSeconds": 5678.92,
+            "staffedPct": 60.56,
+            "unstaffedPct": 39.44
+          },
+          {
+            "hour": 20,
+            "label": "20:00–20:59",
+            "staffedSeconds": 8730.8,
+            "unstaffedSeconds": 5669.2,
+            "staffedPct": 60.63,
+            "unstaffedPct": 39.37
+          },
+          {
+            "hour": 21,
+            "label": "21:00–21:59",
+            "staffedSeconds": 4512.08,
+            "unstaffedSeconds": 3592.16,
+            "staffedPct": 55.68,
+            "unstaffedPct": 44.32
+          }
+        ]
+      },
+      "snapshots": {
+        "aggregateAcrossDays": {
+          "dayCount": 4,
+          "sumTotalReadings": 26573,
+          "avgDailyTotalReadings": 6643.25,
+          "maxPeopleMaxAcrossDays": 16.0,
+          "avgPeopleMaxPerDay": 14.0,
+          "avgPeopleAvgExcludingZerosPerDay": 2.888,
+          "avgNonzeroReadingsPerDay": 4769.0
+        }
+      },
+      "zoneEvents": {
+        "uniqueCustomersAcrossPeriod": 5030,
+        "customerSegmentDwellSeconds": {
+          "segmentCount": 18992,
+          "min": 1.0,
+          "mean": 1334.142,
+          "p50": 28.8,
+          "p90": 5847.9,
+          "p95": 7168.8,
+          "max": 10938.5
+        },
+        "note": "uniqueCustomersAcrossPeriod counts distinct person_id on customer rows across the selected zone_events files (one person once for the whole period)."
+      }
+    }
+  }
+}

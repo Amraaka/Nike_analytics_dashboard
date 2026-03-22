@@ -25,7 +25,17 @@ ChartJS.register(
   Filler
 );
 
-export function CustomerFlowChart() {
+export interface SnapshotHourlyChartPoint {
+  label: string;
+  count: number;
+}
+
+type CustomerFlowChartProps = {
+  /** When set, chart uses snapshot hourly aggregates instead of the live dashboard store. */
+  hourlySnapshotPoints?: SnapshotHourlyChartPoint[];
+};
+
+export function CustomerFlowChart({ hourlySnapshotPoints }: CustomerFlowChartProps) {
   const { customerFlow, timeFilter } = useDashboardStore();
 
   const formatLabel = (date: Date) => {
@@ -41,12 +51,25 @@ export function CustomerFlowChart() {
     }
   };
 
+  const labelsAndCounts: { labels: string[]; counts: number[]; datasetLabel: string } =
+    hourlySnapshotPoints
+      ? {
+          labels: hourlySnapshotPoints.map((p) => p.label),
+          counts: hourlySnapshotPoints.map((p) => p.count),
+          datasetLabel: 'Цагийн дээд (хүн)',
+        }
+      : {
+          labels: customerFlow.map((cf) => formatLabel(cf.timestamp)),
+          counts: customerFlow.map((cf) => cf.count),
+          datasetLabel: 'Харилцагчид',
+        };
+
   const data = {
-    labels: customerFlow.map((cf) => formatLabel(cf.timestamp)),
+    labels: labelsAndCounts.labels,
     datasets: [
       {
-        label: 'Харилцагчид',
-        data: customerFlow.map((cf) => cf.count),
+        label: labelsAndCounts.datasetLabel,
+        data: labelsAndCounts.counts,
         borderColor: 'rgba(59, 130, 246, 1)',
         backgroundColor: 'rgba(59, 130, 246, 0.1)',
         fill: true,
@@ -77,7 +100,9 @@ export function CustomerFlowChart() {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Харилцагчийн тоо',
+          text: hourlySnapshotPoints
+            ? 'Снапшот: цаг бүрийн хамгийн их хүн'
+            : 'Харилцагчийн тоо',
         },
       },
       x: {
