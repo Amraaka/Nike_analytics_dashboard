@@ -1,0 +1,287 @@
+{
+  "dataAsOf": "2026-03-16T14:30:00.000Z",
+  "snapshots": {
+    "1h": {
+      "tellers": [
+        {
+          "id": "Касс-1",
+          "name": "Батбаяр",
+          "isActive": true,
+          "customersServed": 18,
+          "currentCustomer": true,
+          "currentServiceTime": 145,
+          "averageServiceTime": 312,
+          "minServiceTime": 180,
+          "maxServiceTime": 540,
+          "utilization": 88,
+          "activeServingTime": 5616,
+          "totalShiftTime": 6384
+        },
+        {
+          "id": "Касс-2",
+          "name": "Оюунцэцэг",
+          "isActive": true,
+          "customersServed": 22,
+          "currentCustomer": false,
+          "currentServiceTime": 0,
+          "averageServiceTime": 268,
+          "minServiceTime": 150,
+          "maxServiceTime": 420,
+          "utilization": 76,
+          "activeServingTime": 4848,
+          "totalShiftTime": 6384
+        },
+        {
+          "id": "Касс-3",
+          "name": "Энхбат",
+          "isActive": true,
+          "customersServed": 15,
+          "currentCustomer": false,
+          "currentServiceTime": 0,
+          "averageServiceTime": 355,
+          "minServiceTime": 200,
+          "maxServiceTime": 610,
+          "utilization": 96,
+          "activeServingTime": 6128,
+          "totalShiftTime": 6384
+        },
+        {
+          "id": "Касс-4",
+          "name": "Сараа",
+          "isActive": false,
+          "customersServed": 9,
+          "currentCustomer": false,
+          "currentServiceTime": 0,
+          "averageServiceTime": 290,
+          "minServiceTime": 190,
+          "maxServiceTime": 400,
+          "utilization": 0,
+          "activeServingTime": 0,
+          "totalShiftTime": 0
+        }
+      ],
+      "hallMetrics": {
+        "peopleInHall": 42,
+        "timestamp": "2026-03-16T14:30:00.000Z"
+      },
+      "peakHours": [
+        { "hour": 9, "day": "Даваа", "activityLevel": 45 },
+        { "hour": 10, "day": "Даваа", "activityLevel": 62 },
+        { "hour": 11, "day": "Даваа", "activityLevel": 78 },
+        { "hour": 12, "day": "Даваа", "activityLevel": 85 },
+        { "hour": 13, "day": "Даваа", "activityLevel": 72 },
+        { "hour": 14, "day": "Даваа", "activityLevel": 68 },
+        { "hour": 15, "day": "Даваа", "activityLevel": 55 },
+        { "hour": 10, "day": "Мягмар", "activityLevel": 58 },
+        { "hour": 12, "day": "Мягмар", "activityLevel": 81 },
+        { "hour": 14, "day": "Мягмар", "activityLevel": 74 }
+      ],
+      "customerFlow": [
+        { "timestamp": "2026-03-16T09:00:00.000Z", "count": 8 },
+        { "timestamp": "2026-03-16T09:15:00.000Z", "count": 12 },
+        { "timestamp": "2026-03-16T09:30:00.000Z", "count": 15 },
+        { "timestamp": "2026-03-16T09:45:00.000Z", "count": 18 },
+        { "timestamp": "2026-03-16T10:00:00.000Z", "count": 22 },
+        { "timestamp": "2026-03-16T10:30:00.000Z", "count": 28 },
+        { "timestamp": "2026-03-16T11:00:00.000Z", "count": 35 },
+        { "timestamp": "2026-03-16T11:30:00.000Z", "count": 32 },
+        { "timestamp": "2026-03-16T12:00:00.000Z", "count": 40 },
+        { "timestamp": "2026-03-16T12:30:00.000Z", "count": 38 },
+        { "timestamp": "2026-03-16T13:00:00.000Z", "count": 30 },
+        { "timestamp": "2026-03-16T13:30:00.000Z", "count": 26 },
+        { "timestamp": "2026-03-16T14:00:00.000Z", "count": 24 },
+        { "timestamp": "2026-03-16T14:30:00.000Z", "count": 20 }
+      ]
+    },
+    "1d": {
+      "tellers": [
+        {
+          "id": "Касс-1",
+          "name": "Батбаяр",
+          "isActive": true,
+          "customersServed": 112,
+          "currentCustomer": false,
+          "currentServiceTime": 0,
+          "averageServiceTime": 305,
+          "minServiceTime": 160,
+          "maxServiceTime": 520,
+          "utilization": 82,
+          "activeServingTime": 34160,
+          "totalShiftTime": 41600
+        },
+        {
+          "id": "Касс-2",
+          "name": "Оюунцэцэг",
+          "isActive": true,
+          "customersServed": 128,
+          "currentCustomer": true,
+          "currentServiceTime": 92,
+          "averageServiceTime": 255,
+          "minServiceTime": 140,
+          "maxServiceTime": 410,
+          "utilization": 79,
+          "activeServingTime": 32864,
+          "totalShiftTime": 41600
+        },
+        {
+          "id": "Касс-3",
+          "name": "Энхбат",
+          "isActive": true,
+          "customersServed": 98,
+          "currentCustomer": false,
+          "currentServiceTime": 0,
+          "averageServiceTime": 338,
+          "minServiceTime": 190,
+          "maxServiceTime": 580,
+          "utilization": 91,
+          "activeServingTime": 37856,
+          "totalShiftTime": 41600
+        },
+        {
+          "id": "Касс-4",
+          "name": "Сараа",
+          "isActive": true,
+          "customersServed": 86,
+          "currentCustomer": false,
+          "currentServiceTime": 0,
+          "averageServiceTime": 288,
+          "minServiceTime": 170,
+          "maxServiceTime": 450,
+          "utilization": 71,
+          "activeServingTime": 29536,
+          "totalShiftTime": 41600
+        }
+      ],
+      "hallMetrics": {
+        "peopleInHall": 28,
+        "timestamp": "2026-03-16T18:00:00.000Z"
+      },
+      "peakHours": [
+        { "hour": 9, "day": "Даваа", "activityLevel": 48 },
+        { "hour": 10, "day": "Даваа", "activityLevel": 65 },
+        { "hour": 11, "day": "Даваа", "activityLevel": 72 },
+        { "hour": 12, "day": "Даваа", "activityLevel": 88 },
+        { "hour": 13, "day": "Даваа", "activityLevel": 80 },
+        { "hour": 14, "day": "Даваа", "activityLevel": 70 },
+        { "hour": 15, "day": "Даваа", "activityLevel": 62 },
+        { "hour": 16, "day": "Даваа", "activityLevel": 52 },
+        { "hour": 9, "day": "Мягмар", "activityLevel": 50 },
+        { "hour": 12, "day": "Мягмар", "activityLevel": 84 },
+        { "hour": 15, "day": "Мягмар", "activityLevel": 68 },
+        { "hour": 10, "day": "Лхагва", "activityLevel": 60 },
+        { "hour": 12, "day": "Лхагва", "activityLevel": 79 },
+        { "hour": 14, "day": "Лхагва", "activityLevel": 73 }
+      ],
+      "customerFlow": [
+        { "timestamp": "2026-03-10T09:00:00.000Z", "count": 120 },
+        { "timestamp": "2026-03-10T10:00:00.000Z", "count": 185 },
+        { "timestamp": "2026-03-10T11:00:00.000Z", "count": 210 },
+        { "timestamp": "2026-03-10T12:00:00.000Z", "count": 265 },
+        { "timestamp": "2026-03-10T13:00:00.000Z", "count": 240 },
+        { "timestamp": "2026-03-10T14:00:00.000Z", "count": 198 },
+        { "timestamp": "2026-03-10T15:00:00.000Z", "count": 175 },
+        { "timestamp": "2026-03-11T09:00:00.000Z", "count": 132 },
+        { "timestamp": "2026-03-11T12:00:00.000Z", "count": 248 },
+        { "timestamp": "2026-03-11T15:00:00.000Z", "count": 190 },
+        { "timestamp": "2026-03-12T09:00:00.000Z", "count": 128 },
+        { "timestamp": "2026-03-12T12:00:00.000Z", "count": 255 },
+        { "timestamp": "2026-03-13T09:00:00.000Z", "count": 142 },
+        { "timestamp": "2026-03-13T12:00:00.000Z", "count": 270 },
+        { "timestamp": "2026-03-14T10:00:00.000Z", "count": 310 },
+        { "timestamp": "2026-03-15T11:00:00.000Z", "count": 285 },
+        { "timestamp": "2026-03-16T09:00:00.000Z", "count": 155 },
+        { "timestamp": "2026-03-16T12:00:00.000Z", "count": 242 },
+        { "timestamp": "2026-03-16T14:00:00.000Z", "count": 198 }
+      ]
+    },
+    "1w": {
+      "tellers": [
+        {
+          "id": "Касс-1",
+          "name": "Батбаяр",
+          "isActive": true,
+          "customersServed": 518,
+          "currentCustomer": false,
+          "currentServiceTime": 0,
+          "averageServiceTime": 298,
+          "minServiceTime": 150,
+          "maxServiceTime": 540,
+          "utilization": 80,
+          "activeServingTime": 154240,
+          "totalShiftTime": 192800
+        },
+        {
+          "id": "Касс-2",
+          "name": "Оюунцэцэг",
+          "isActive": true,
+          "customersServed": 602,
+          "currentCustomer": false,
+          "currentServiceTime": 0,
+          "averageServiceTime": 248,
+          "minServiceTime": 130,
+          "maxServiceTime": 400,
+          "utilization": 77,
+          "activeServingTime": 148456,
+          "totalShiftTime": 192800
+        },
+        {
+          "id": "Касс-3",
+          "name": "Энхбат",
+          "isActive": true,
+          "customersServed": 455,
+          "currentCustomer": true,
+          "currentServiceTime": 201,
+          "averageServiceTime": 328,
+          "minServiceTime": 180,
+          "maxServiceTime": 600,
+          "utilization": 89,
+          "activeServingTime": 171592,
+          "totalShiftTime": 192800
+        },
+        {
+          "id": "Касс-4",
+          "name": "Сараа",
+          "isActive": true,
+          "customersServed": 489,
+          "currentCustomer": false,
+          "currentServiceTime": 0,
+          "averageServiceTime": 275,
+          "minServiceTime": 160,
+          "maxServiceTime": 480,
+          "utilization": 74,
+          "activeServingTime": 142672,
+          "totalShiftTime": 192800
+        }
+      ],
+      "hallMetrics": {
+        "peopleInHall": 33,
+        "timestamp": "2026-03-16T14:30:00.000Z"
+      },
+      "peakHours": [
+        { "hour": 9, "day": "Даваа", "activityLevel": 52 },
+        { "hour": 10, "day": "Даваа", "activityLevel": 68 },
+        { "hour": 11, "day": "Даваа", "activityLevel": 75 },
+        { "hour": 12, "day": "Даваа", "activityLevel": 90 },
+        { "hour": 13, "day": "Даваа", "activityLevel": 82 },
+        { "hour": 14, "day": "Даваа", "activityLevel": 72 },
+        { "hour": 15, "day": "Даваа", "activityLevel": 64 },
+        { "hour": 9, "day": "Мягмар", "activityLevel": 55 },
+        { "hour": 12, "day": "Мягмар", "activityLevel": 86 },
+        { "hour": 9, "day": "Лхагва", "activityLevel": 58 },
+        { "hour": 12, "day": "Лхагва", "activityLevel": 81 },
+        { "hour": 9, "day": "Пүрэв", "activityLevel": 60 },
+        { "hour": 12, "day": "Пүрэв", "activityLevel": 79 },
+        { "hour": 10, "day": "Баасан", "activityLevel": 70 },
+        { "hour": 12, "day": "Баасан", "activityLevel": 88 },
+        { "hour": 11, "day": "Бямба", "activityLevel": 76 }
+      ],
+      "customerFlow": [
+        { "timestamp": "2026-02-17T12:00:00.000Z", "count": 1520 },
+        { "timestamp": "2026-02-24T12:00:00.000Z", "count": 1685 },
+        { "timestamp": "2026-03-03T12:00:00.000Z", "count": 1590 },
+        { "timestamp": "2026-03-10T12:00:00.000Z", "count": 1742 },
+        { "timestamp": "2026-03-16T12:00:00.000Z", "count": 1810 }
+      ]
+    }
+  }
+}
