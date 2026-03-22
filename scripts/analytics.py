@@ -4,7 +4,6 @@ Read retail / camera analytics CSV exports and write a single structured analyti
 
 Default inputs (same calendar day, under project output/):
   output/counter_staffing_YYYYMMDD.csv
-  output/dwell_YYYYMMDD.csv
   output/snapshots_YYYYMMDD.csv
   output/zone_events_YYYYMMDD.csv
 
@@ -32,7 +31,6 @@ def default_bundle_paths(root: Path, date_suffix: str) -> dict[str, Path]:
     out = root / "output"
     return {
         "counter_staffing": out / f"counter_staffing_{date_suffix}.csv",
-        "dwell": out / f"dwell_{date_suffix}.csv",
         "snapshots": out / f"snapshots_{date_suffix}.csv",
         "zone_events": out / f"zone_events_{date_suffix}.csv",
     }
@@ -242,78 +240,6 @@ def analyze_counter_staffing_files(paths: list[Path]) -> dict[str, Any] | None:
     }
 
 
-# --- dwell ---
-
-
-def analyze_dwell(path: Path, d: date) -> dict[str, Any]:
-    rows: list[dict[str, Any]] = []
-    with path.open(newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            role = (row.get("role") or "").strip().lower()
-            if role != "customer":
-                continue
-            try:
-                dwell = float(row["dwell_seconds"])
-            except (KeyError, ValueError):
-                continue
-            try:
-                t_enter = combine_date_time(d, row["time_enter"])
-            except (KeyError, ValueError):
-                continue
-            pid = (row.get("person_id") or "").strip()
-            rows.append(
-                {
-                    "person_id": pid,
-                    "dwell_seconds": dwell,
-                    "hour": t_enter.hour,
-                    "camera_id": (row.get("camera_id") or "").strip(),
-                }
-            )
-
-    dwell_vals = sorted(r["dwell_seconds"] for r in rows)
-    unique_ids = {r["person_id"] for r in rows if r["person_id"]}
-
-    by_hour_unique: dict[int, set[str]] = defaultdict(set)
-    for r in rows:
-        by_hour_unique[r["hour"]].add(r["person_id"])
-
-    hour_counts = [(h, len(by_hour_unique[h])) for h in sorted(by_hour_unique)]
-    peak = max(hour_counts, key=lambda x: x[1]) if hour_counts else None
-
-    return {
-        "source_file": path.name,
-        "scope": "rows where role == customer",
-        "visit_segments": len(rows),
-        "unique_visitors": len(unique_ids),
-        "dwell_seconds_distribution": {
-            "min": round(min(dwell_vals), 3) if dwell_vals else None,
-            "mean": round(mean(dwell_vals), 3) if dwell_vals else None,
-            "p50": round(percentile_nearest_rank(dwell_vals, 50), 3) if dwell_vals else None,
-            "p90": round(percentile_nearest_rank(dwell_vals, 90), 3) if dwell_vals else None,
-            "p95": round(percentile_nearest_rank(dwell_vals, 95), 3) if dwell_vals else None,
-            "max": round(max(dwell_vals), 3) if dwell_vals else None,
-        },
-        "peak_hour_by_unique_visitors": (
-            {
-                "hour": peak[0],
-                "hour_label": f"{peak[0]:02d}:00–{peak[0]:02d}:59",
-                "unique_visitors": peak[1],
-            }
-            if peak
-            else None
-        ),
-        "by_hour_unique_visitors": [
-            {
-                "hour": h,
-                "hour_label": f"{h:02d}:00–{h:02d}:59",
-                "unique_visitors": c,
-            }
-            for h, c in hour_counts
-        ],
-    }
-
-
 # --- snapshots ---
 
 
@@ -403,11 +329,35 @@ def analyze_snapshots(path: Path, d: date) -> dict[str, Any]:
 # --- zone_events ---
 
 
+def _dwell_seconds_distribution(vals: list[float]) -> dict[str, float | int | None]:
+    if not vals:
+        return {
+            "segment_count": 0,
+            "min": None,
+            "mean": None,
+            "p50": None,
+            "p90": None,
+            "p95": None,
+            "max": None,
+        }
+    s = sorted(vals)
+    return {
+        "segment_count": len(vals),
+        "min": round(min(s), 3),
+        "mean": round(mean(s), 3),
+        "p50": round(percentile_nearest_rank(s, 50), 3),
+        "p90": round(percentile_nearest_rank(s, 90), 3),
+        "p95": round(percentile_nearest_rank(s, 95), 3),
+        "max": round(max(s), 3),
+    }
+
+
 def analyze_zone_events(path: Path, d: date) -> dict[str, Any]:
     by_zone_dwell: dict[str, float] = defaultdict(float)
     by_zone_events: dict[str, int] = defaultdict(int)
     by_zone_visitors: dict[str, set[str]] = defaultdict(set)
     by_zone_durations: dict[str, list[float]] = defaultdict(list)
+    customer_duration_seconds: list[float] = []
 
     by_hour_activity: dict[int, int] = defaultdict(int)
     by_hour_unique: dict[int, set[str]] = defaultdict(set)
@@ -422,6 +372,9 @@ def analyze_zone_events(path: Path, d: date) -> dict[str, Any]:
                 dur = 0.0
             pid = (row.get("person_id") or "").strip()
             role = (row.get("role") or "").strip().lower()
+
+            if role == "customer":
+                customer_duration_seconds.append(dur)
 
             by_zone_dwell[zone] += dur
             by_zone_events[zone] += 1
@@ -470,6 +423,10 @@ def analyze_zone_events(path: Path, d: date) -> dict[str, Any]:
         "totals": {
             "unique_visitors_customers": len(total_unique_customers),
             "note": "Union of distinct customer person_id across all zones.",
+            "dwell_seconds_distribution": {
+                **_dwell_seconds_distribution(customer_duration_seconds),
+                "scope": "rows where role == customer; duration_seconds per event segment",
+            },
         },
         "by_zone": zone_summaries,
         "zone_popularity_ranking": [
@@ -546,16 +503,11 @@ def main() -> None:
             .replace("+00:00", "Z"),
         },
         "counter_staffing": None,
-        "dwell": None,
         "snapshots": None,
         "zone_events": None,
     }
 
     out["counter_staffing"] = analyze_counter_staffing_files(cs_paths)
-
-    dw = bundle["dwell"]
-    if dw.is_file():
-        out["dwell"] = analyze_dwell(dw, ref_date)
 
     sn = bundle["snapshots"]
     if sn.is_file():
