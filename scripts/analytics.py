@@ -388,6 +388,89 @@ def analyze_snapshots(path: Path, d: date) -> dict[str, Any]:
 
 # --- zone_events ---
 
+# Per-person dwell: cumulative "% of people with total dwell ≤ T" and "% ≥ T"
+DWELL_PEOPLE_CUMULATIVE_AT_MOST_SECONDS: tuple[int, ...] = (
+    60,
+    300,
+    600,
+    900,
+    1800,
+    2700,
+    3600,
+    5400,
+    7200,
+)
+DWELL_PEOPLE_AT_LEAST_SECONDS: tuple[int, ...] = (900, 1800, 3600, 5400, 7200, 10800)
+
+
+def _label_dwell_at_most_seconds(sec: int) -> str:
+    if sec >= 3600 and sec % 3600 == 0:
+        h = sec // 3600
+        return f"≤{h} h" if h != 1 else "≤1 h"
+    if sec >= 60:
+        m = sec // 60
+        return f"≤{m} min"
+    return f"≤{sec}s"
+
+
+def _label_dwell_at_least_seconds(sec: int) -> str:
+    if sec >= 3600 and sec % 3600 == 0:
+        h = sec // 3600
+        return f"≥{h} h" if h != 1 else "≥1 h"
+    if sec >= 60:
+        m = sec // 60
+        return f"≥{m} min"
+    return f"≥{sec}s"
+
+
+def _dwell_share_by_people_seconds(per_person_totals: list[float]) -> dict[str, Any]:
+    """
+    Percent of *people* (one row per person_id) whose summed customer dwell
+    is at most / at least each threshold. Totals are in seconds.
+    """
+    n = len(per_person_totals)
+    if n == 0:
+        return {
+            "people_count": 0,
+            "sample_basis": "per_person_per_calendar_day",
+            "cumulative_pct_at_most_seconds": [],
+            "pct_at_least_seconds": [],
+        }
+    totals = per_person_totals  # use as-is for counting
+
+    def pct_at_most(th: float) -> float:
+        c = sum(1 for x in totals if x <= th)
+        return round(100.0 * c / n, 2)
+
+    def pct_at_least(th: float) -> float:
+        c = sum(1 for x in totals if x >= th)
+        return round(100.0 * c / n, 2)
+
+    cumul = []
+    for sec in DWELL_PEOPLE_CUMULATIVE_AT_MOST_SECONDS:
+        cumul.append(
+            {
+                "seconds": sec,
+                "label": _label_dwell_at_most_seconds(sec),
+                "pct_of_people": pct_at_most(float(sec)),
+            }
+        )
+    at_least = []
+    for sec in DWELL_PEOPLE_AT_LEAST_SECONDS:
+        at_least.append(
+            {
+                "seconds": sec,
+                "label": _label_dwell_at_least_seconds(sec),
+                "pct_of_people": pct_at_least(float(sec)),
+            }
+        )
+    return {
+        "people_count": n,
+        "sample_basis": "per_person_per_calendar_day",
+        "cumulative_pct_at_most_seconds": cumul,
+        "pct_at_least_seconds": at_least,
+    }
+
 
 def _dwell_seconds_distribution(vals: list[float]) -> dict[str, float | int | None]:
     if not vals:
@@ -418,6 +501,7 @@ def analyze_zone_events(path: Path, d: date) -> dict[str, Any]:
     by_zone_visitors: dict[str, set[str]] = defaultdict(set)
     by_zone_durations: dict[str, list[float]] = defaultdict(list)
     customer_duration_seconds: list[float] = []
+    customer_person_total_dwell: dict[str, float] = defaultdict(float)
 
     by_hour_activity: dict[int, int] = defaultdict(int)
     by_hour_unique: dict[int, set[str]] = defaultdict(set)
@@ -435,6 +519,8 @@ def analyze_zone_events(path: Path, d: date) -> dict[str, Any]:
 
             if role == "customer":
                 customer_duration_seconds.append(dur)
+                if pid:
+                    customer_person_total_dwell[pid] += dur
 
             by_zone_dwell[zone] += dur
             by_zone_events[zone] += 1
@@ -478,6 +564,10 @@ def analyze_zone_events(path: Path, d: date) -> dict[str, Any]:
     hour_unique = sorted((h, len(by_hour_unique[h])) for h in sorted(by_hour_unique))
     peak_unique_h = max(hour_unique, key=lambda x: x[1]) if hour_unique else None
 
+    per_person_totals = list(customer_person_total_dwell.values())
+    dwell_by_people = _dwell_share_by_people_seconds(per_person_totals)
+    
+
     return {
         "reference_date": d.isoformat(),
         "source_file": path.name,
@@ -488,6 +578,7 @@ def analyze_zone_events(path: Path, d: date) -> dict[str, Any]:
                 **_dwell_seconds_distribution(customer_duration_seconds),
                 "scope": "rows where role == customer; duration_seconds per event segment",
             },
+            "dwell_share_by_people_seconds": dwell_by_people,
         },
         "by_zone": zone_summaries,
         "zone_popularity_ranking": [
@@ -540,6 +631,12 @@ DEFINITIONS: dict[str, str] = {
     ),
     "zoneEventsCustomerDwell": (
         "Per event segment duration_seconds for customer rows (multiple segments per person possible)."
+    ),
+    "zoneEventsCustomerDwellByPeople": (
+        "Per person_id per calendar day: total dwell = sum of duration_seconds on customer rows that day "
+        "(all zones). For multi-day windows, each (person, day) is one sample (person-days). "
+        "cumulativePctAtMostSeconds: % of samples with total dwell ≤ threshold. pctAtLeastSeconds: % ≥ threshold. "
+        "Excludes rows with empty person_id."
     ),
 }
 
@@ -655,6 +752,28 @@ def format_zone_events(raw: dict[str, Any] | None) -> dict[str, Any] | None:
         "p95": dist["p95"],
         "max": dist["max"],
     }
+    dbp = t.get("dwell_share_by_people_seconds") or {}
+    dwell_by_people_out: dict[str, Any] = {
+        "peopleCount": dbp.get("people_count", 0),
+        "sampleBasis": dbp.get("sample_basis"),
+        "scope": dbp.get("scope"),
+        "cumulativePctAtMostSeconds": [
+            {
+                "seconds": x["seconds"],
+                "label": x["label"],
+                "pctOfPeople": x["pct_of_people"],
+            }
+            for x in dbp.get("cumulative_pct_at_most_seconds", [])
+        ],
+        "pctAtLeastSeconds": [
+            {
+                "seconds": x["seconds"],
+                "label": x["label"],
+                "pctOfPeople": x["pct_of_people"],
+            }
+            for x in dbp.get("pct_at_least_seconds", [])
+        ],
+    }
 
     zones = []
     for z in raw["by_zone"]:
@@ -690,6 +809,7 @@ def format_zone_events(raw: dict[str, Any] | None) -> dict[str, Any] | None:
             "uniqueCustomers": t["unique_visitors_customers"],
         },
         "customerSegmentDwellSeconds": dist_clean,
+        "customerDwellShareByPeople": dwell_by_people_out,
         "zones": zones,
         "zoneRanking": ranking,
         "peakActivity": {
@@ -777,15 +897,23 @@ def take_last_n_suffixes(suffixes: list[str], n: int) -> list[str]:
     return [s for _, s in tail]
 
 
-def zone_events_union_customer_metrics(paths: list[Path]) -> tuple[int, list[float]]:
-    """Distinct customer person_id across files; all customer segment durations for distribution."""
+def zone_events_union_customer_metrics(
+    paths: list[Path],
+) -> tuple[int, list[float], list[float]]:
+    """
+    Distinct customer person_id across files; all customer segment durations;
+    for dwell-by-people distribution: one total per (person_id, calendar day) —
+    sum of that day's customer segments (not summed across multiple days for the same person).
+    """
     ids: set[str] = set()
     durations: list[float] = []
+    per_day_person_totals: list[float] = []
     for path in paths:
         if not path.is_file():
             continue
         if infer_date_from_stem(path.stem) is None:
             continue
+        day_person: dict[str, float] = defaultdict(float)
         with path.open(newline="", encoding="utf-8") as f:
             reader = csv.DictReader(f)
             for row in reader:
@@ -793,13 +921,16 @@ def zone_events_union_customer_metrics(paths: list[Path]) -> tuple[int, list[flo
                 if role != "customer":
                     continue
                 try:
-                    durations.append(float(row.get("duration_seconds") or 0))
+                    d = float(row.get("duration_seconds") or 0)
                 except ValueError:
-                    pass
+                    d = 0.0
+                durations.append(d)
                 pid = (row.get("person_id") or "").strip()
                 if pid:
                     ids.add(pid)
-    return len(ids), durations
+                    day_person[pid] += d
+        per_day_person_totals.extend(day_person.values())
+    return len(ids), durations, per_day_person_totals
 
 
 def aggregate_snapshots_day_raw(sn_raws: list[dict[str, Any]]) -> dict[str, Any] | None:
@@ -856,8 +987,14 @@ def build_period_summary_last7_days(
 
     ze_paths = [root / "output" / f"zone_events_{s}.csv" for s in sel]
     ze_paths = [p for p in ze_paths if p.is_file()]
-    n_unique, durs = zone_events_union_customer_metrics(ze_paths)
+    n_unique, durs, per_person_totals = zone_events_union_customer_metrics(ze_paths)
     dist = _dwell_seconds_distribution(durs)
+    dwell_by_people = _dwell_share_by_people_seconds(per_person_totals)
+    dwell_by_people["scope"] = (
+        "One sample per customer per calendar day: total dwell = sum of duration_seconds on customer rows "
+        "that day (all zones). Same person on multiple days appears as multiple samples (person-days). "
+        "Percentages use non-empty person_id only."
+    )
 
     agg_sn = aggregate_snapshots_day_raw(sn_win)
 
@@ -887,6 +1024,27 @@ def build_period_summary_last7_days(
                 "p90": dist["p90"],
                 "p95": dist["p95"],
                 "max": dist["max"],
+            },
+            "customerDwellShareByPeople": {
+                "peopleCount": dwell_by_people["people_count"],
+                "sampleBasis": dwell_by_people.get("sample_basis"),
+                "scope": dwell_by_people.get("scope"),
+                "cumulativePctAtMostSeconds": [
+                    {
+                        "seconds": x["seconds"],
+                        "label": x["label"],
+                        "pctOfPeople": x["pct_of_people"],
+                    }
+                    for x in dwell_by_people.get("cumulative_pct_at_most_seconds", [])
+                ],
+                "pctAtLeastSeconds": [
+                    {
+                        "seconds": x["seconds"],
+                        "label": x["label"],
+                        "pctOfPeople": x["pct_of_people"],
+                    }
+                    for x in dwell_by_people.get("pct_at_least_seconds", [])
+                ],
             },
             "note": (
                 "uniqueCustomersAcrossPeriod counts distinct person_id on customer rows "

@@ -31,13 +31,14 @@
         "zone_events_20260304.csv"
       ]
     },
-    "generatedAtUtc": "2026-03-22T11:08:06Z"
+    "generatedAtUtc": "2026-03-22T11:31:27Z"
   },
   "definitions": {
     "counterStaffingDuration": "Time in previous_state before each transition; duplicate rows dropped; new_state 'end' excluded. Summary totals sum full duration_seconds. Hourly series prorates each segment across clock hours.",
     "snapshotsPeopleColumn": "Only the people column. max and min include all readings; avgExcludingZeros is the mean where people is not 0.",
     "zoneEventsUniqueVisitors": "Distinct person_id where role is customer, union across all zones for the day (one count per person).",
-    "zoneEventsCustomerDwell": "Per event segment duration_seconds for customer rows (multiple segments per person possible)."
+    "zoneEventsCustomerDwell": "Per event segment duration_seconds for customer rows (multiple segments per person possible).",
+    "zoneEventsCustomerDwellByPeople": "Per person_id per calendar day: total dwell = sum of duration_seconds on customer rows that day (all zones). For multi-day windows, each (person, day) is one sample (person-days). cumulativePctAtMostSeconds: % of samples with total dwell ≤ threshold. pctAtLeastSeconds: % ≥ threshold. Excludes rows with empty person_id."
   },
   "counterStaffing": {
     "summary": {
@@ -1310,6 +1311,90 @@
           "p95": 8384.2,
           "max": 10938.5
         },
+        "customerDwellShareByPeople": {
+          "peopleCount": 3319,
+          "sampleBasis": "per_person_per_calendar_day",
+          "scope": "Per person_id: sum of duration_seconds on rows where role is customer (all zones, same day). Percentages are share of distinct customers with non-empty person_id.",
+          "cumulativePctAtMostSeconds": [
+            {
+              "seconds": 60,
+              "label": "≤1 min",
+              "pctOfPeople": 34.8
+            },
+            {
+              "seconds": 300,
+              "label": "≤5 min",
+              "pctOfPeople": 47.82
+            },
+            {
+              "seconds": 600,
+              "label": "≤10 min",
+              "pctOfPeople": 49.68
+            },
+            {
+              "seconds": 900,
+              "label": "≤15 min",
+              "pctOfPeople": 50.71
+            },
+            {
+              "seconds": 1800,
+              "label": "≤30 min",
+              "pctOfPeople": 55.56
+            },
+            {
+              "seconds": 2700,
+              "label": "≤45 min",
+              "pctOfPeople": 57.73
+            },
+            {
+              "seconds": 3600,
+              "label": "≤1 h",
+              "pctOfPeople": 61.86
+            },
+            {
+              "seconds": 5400,
+              "label": "≤90 min",
+              "pctOfPeople": 71.83
+            },
+            {
+              "seconds": 7200,
+              "label": "≤2 h",
+              "pctOfPeople": 83.16
+            }
+          ],
+          "pctAtLeastSeconds": [
+            {
+              "seconds": 900,
+              "label": "≥15 min",
+              "pctOfPeople": 49.29
+            },
+            {
+              "seconds": 1800,
+              "label": "≥30 min",
+              "pctOfPeople": 44.44
+            },
+            {
+              "seconds": 3600,
+              "label": "≥1 h",
+              "pctOfPeople": 38.14
+            },
+            {
+              "seconds": 5400,
+              "label": "≥90 min",
+              "pctOfPeople": 28.17
+            },
+            {
+              "seconds": 7200,
+              "label": "≥2 h",
+              "pctOfPeople": 16.84
+            },
+            {
+              "seconds": 10800,
+              "label": "≥3 h",
+              "pctOfPeople": 0.24
+            }
+          ]
+        },
         "zones": [
           {
             "zone": "store_hall",
@@ -1382,6 +1467,90 @@
           "p90": 5913.2,
           "p95": 6714.6,
           "max": 8802.3
+        },
+        "customerDwellShareByPeople": {
+          "peopleCount": 2132,
+          "sampleBasis": "per_person_per_calendar_day",
+          "scope": "Per person_id: sum of duration_seconds on rows where role is customer (all zones, same day). Percentages are share of distinct customers with non-empty person_id.",
+          "cumulativePctAtMostSeconds": [
+            {
+              "seconds": 60,
+              "label": "≤1 min",
+              "pctOfPeople": 29.17
+            },
+            {
+              "seconds": 300,
+              "label": "≤5 min",
+              "pctOfPeople": 42.26
+            },
+            {
+              "seconds": 600,
+              "label": "≤10 min",
+              "pctOfPeople": 44.23
+            },
+            {
+              "seconds": 900,
+              "label": "≤15 min",
+              "pctOfPeople": 45.78
+            },
+            {
+              "seconds": 1800,
+              "label": "≤30 min",
+              "pctOfPeople": 52.35
+            },
+            {
+              "seconds": 2700,
+              "label": "≤45 min",
+              "pctOfPeople": 59.15
+            },
+            {
+              "seconds": 3600,
+              "label": "≤1 h",
+              "pctOfPeople": 65.06
+            },
+            {
+              "seconds": 5400,
+              "label": "≤90 min",
+              "pctOfPeople": 77.77
+            },
+            {
+              "seconds": 7200,
+              "label": "≤2 h",
+              "pctOfPeople": 93.39
+            }
+          ],
+          "pctAtLeastSeconds": [
+            {
+              "seconds": 900,
+              "label": "≥15 min",
+              "pctOfPeople": 54.22
+            },
+            {
+              "seconds": 1800,
+              "label": "≥30 min",
+              "pctOfPeople": 47.65
+            },
+            {
+              "seconds": 3600,
+              "label": "≥1 h",
+              "pctOfPeople": 34.94
+            },
+            {
+              "seconds": 5400,
+              "label": "≥90 min",
+              "pctOfPeople": 22.23
+            },
+            {
+              "seconds": 7200,
+              "label": "≥2 h",
+              "pctOfPeople": 6.61
+            },
+            {
+              "seconds": 10800,
+              "label": "≥3 h",
+              "pctOfPeople": 0.0
+            }
+          ]
         },
         "zones": [
           {
@@ -1456,6 +1625,90 @@
           "p95": 6728.5,
           "max": 9277.2
         },
+        "customerDwellShareByPeople": {
+          "peopleCount": 2164,
+          "sampleBasis": "per_person_per_calendar_day",
+          "scope": "Per person_id: sum of duration_seconds on rows where role is customer (all zones, same day). Percentages are share of distinct customers with non-empty person_id.",
+          "cumulativePctAtMostSeconds": [
+            {
+              "seconds": 60,
+              "label": "≤1 min",
+              "pctOfPeople": 31.7
+            },
+            {
+              "seconds": 300,
+              "label": "≤5 min",
+              "pctOfPeople": 43.9
+            },
+            {
+              "seconds": 600,
+              "label": "≤10 min",
+              "pctOfPeople": 46.72
+            },
+            {
+              "seconds": 900,
+              "label": "≤15 min",
+              "pctOfPeople": 49.21
+            },
+            {
+              "seconds": 1800,
+              "label": "≤30 min",
+              "pctOfPeople": 56.1
+            },
+            {
+              "seconds": 2700,
+              "label": "≤45 min",
+              "pctOfPeople": 61.23
+            },
+            {
+              "seconds": 3600,
+              "label": "≤1 h",
+              "pctOfPeople": 67.7
+            },
+            {
+              "seconds": 5400,
+              "label": "≤90 min",
+              "pctOfPeople": 80.68
+            },
+            {
+              "seconds": 7200,
+              "label": "≤2 h",
+              "pctOfPeople": 94.09
+            }
+          ],
+          "pctAtLeastSeconds": [
+            {
+              "seconds": 900,
+              "label": "≥15 min",
+              "pctOfPeople": 50.79
+            },
+            {
+              "seconds": 1800,
+              "label": "≥30 min",
+              "pctOfPeople": 43.9
+            },
+            {
+              "seconds": 3600,
+              "label": "≥1 h",
+              "pctOfPeople": 32.3
+            },
+            {
+              "seconds": 5400,
+              "label": "≥90 min",
+              "pctOfPeople": 19.32
+            },
+            {
+              "seconds": 7200,
+              "label": "≥2 h",
+              "pctOfPeople": 5.91
+            },
+            {
+              "seconds": 10800,
+              "label": "≥3 h",
+              "pctOfPeople": 0.0
+            }
+          ]
+        },
         "zones": [
           {
             "zone": "store_hall",
@@ -1528,6 +1781,90 @@
           "p90": 5280.9,
           "p95": 6189.8,
           "max": 8441.6
+        },
+        "customerDwellShareByPeople": {
+          "peopleCount": 2256,
+          "sampleBasis": "per_person_per_calendar_day",
+          "scope": "Per person_id: sum of duration_seconds on rows where role is customer (all zones, same day). Percentages are share of distinct customers with non-empty person_id.",
+          "cumulativePctAtMostSeconds": [
+            {
+              "seconds": 60,
+              "label": "≤1 min",
+              "pctOfPeople": 33.02
+            },
+            {
+              "seconds": 300,
+              "label": "≤5 min",
+              "pctOfPeople": 45.21
+            },
+            {
+              "seconds": 600,
+              "label": "≤10 min",
+              "pctOfPeople": 47.21
+            },
+            {
+              "seconds": 900,
+              "label": "≤15 min",
+              "pctOfPeople": 48.67
+            },
+            {
+              "seconds": 1800,
+              "label": "≤30 min",
+              "pctOfPeople": 55.19
+            },
+            {
+              "seconds": 2700,
+              "label": "≤45 min",
+              "pctOfPeople": 62.32
+            },
+            {
+              "seconds": 3600,
+              "label": "≤1 h",
+              "pctOfPeople": 70.04
+            },
+            {
+              "seconds": 5400,
+              "label": "≤90 min",
+              "pctOfPeople": 81.83
+            },
+            {
+              "seconds": 7200,
+              "label": "≤2 h",
+              "pctOfPeople": 94.46
+            }
+          ],
+          "pctAtLeastSeconds": [
+            {
+              "seconds": 900,
+              "label": "≥15 min",
+              "pctOfPeople": 51.33
+            },
+            {
+              "seconds": 1800,
+              "label": "≥30 min",
+              "pctOfPeople": 44.81
+            },
+            {
+              "seconds": 3600,
+              "label": "≥1 h",
+              "pctOfPeople": 29.96
+            },
+            {
+              "seconds": 5400,
+              "label": "≥90 min",
+              "pctOfPeople": 18.17
+            },
+            {
+              "seconds": 7200,
+              "label": "≥2 h",
+              "pctOfPeople": 5.54
+            },
+            {
+              "seconds": 10800,
+              "label": "≥3 h",
+              "pctOfPeople": 0.0
+            }
+          ]
         },
         "zones": [
           {
@@ -1741,6 +2078,90 @@
           "p90": 5847.9,
           "p95": 7168.8,
           "max": 10938.5
+        },
+        "customerDwellShareByPeople": {
+          "peopleCount": 9871,
+          "sampleBasis": "per_person_per_calendar_day",
+          "scope": "One sample per customer per calendar day: total dwell = sum of duration_seconds on customer rows that day (all zones). Same person on multiple days appears as multiple samples (person-days). Percentages use non-empty person_id only.",
+          "cumulativePctAtMostSeconds": [
+            {
+              "seconds": 60,
+              "label": "≤1 min",
+              "pctOfPeople": 32.5
+            },
+            {
+              "seconds": 300,
+              "label": "≤5 min",
+              "pctOfPeople": 45.16
+            },
+            {
+              "seconds": 600,
+              "label": "≤10 min",
+              "pctOfPeople": 47.29
+            },
+            {
+              "seconds": 900,
+              "label": "≤15 min",
+              "pctOfPeople": 48.85
+            },
+            {
+              "seconds": 1800,
+              "label": "≤30 min",
+              "pctOfPeople": 54.9
+            },
+            {
+              "seconds": 2700,
+              "label": "≤45 min",
+              "pctOfPeople": 59.85
+            },
+            {
+              "seconds": 3600,
+              "label": "≤1 h",
+              "pctOfPeople": 65.7
+            },
+            {
+              "seconds": 5400,
+              "label": "≤90 min",
+              "pctOfPeople": 77.34
+            },
+            {
+              "seconds": 7200,
+              "label": "≤2 h",
+              "pctOfPeople": 90.35
+            }
+          ],
+          "pctAtLeastSeconds": [
+            {
+              "seconds": 900,
+              "label": "≥15 min",
+              "pctOfPeople": 51.15
+            },
+            {
+              "seconds": 1800,
+              "label": "≥30 min",
+              "pctOfPeople": 45.1
+            },
+            {
+              "seconds": 3600,
+              "label": "≥1 h",
+              "pctOfPeople": 34.3
+            },
+            {
+              "seconds": 5400,
+              "label": "≥90 min",
+              "pctOfPeople": 22.66
+            },
+            {
+              "seconds": 7200,
+              "label": "≥2 h",
+              "pctOfPeople": 9.65
+            },
+            {
+              "seconds": 10800,
+              "label": "≥3 h",
+              "pctOfPeople": 0.08
+            }
+          ]
         },
         "note": "uniqueCustomersAcrossPeriod counts distinct person_id on customer rows across the selected zone_events files (one person once for the whole period)."
       }

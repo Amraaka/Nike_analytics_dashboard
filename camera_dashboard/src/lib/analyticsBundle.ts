@@ -16,12 +16,17 @@ export function getOverviewDayOptions(): { key: OverviewDayKey; label: string }[
   return [overall, ...days];
 }
 
+/** Tab label: `3/1` from `2026-03-01` (month/day, no leading zeros). */
 function formatDayTabLabel(isoDate: string): string {
-  const d = new Date(`${isoDate}T12:00:00`);
-  return new Intl.DateTimeFormat("mn-MN", {
-    month: "short",
-    day: "numeric",
-  }).format(d);
+  const parts = isoDate.split("-");
+  if (parts.length >= 3) {
+    const month = Number(parts[1]);
+    const day = Number(parts[2]);
+    if (Number.isFinite(month) && Number.isFinite(day)) {
+      return `${month}/${day}`;
+    }
+  }
+  return isoDate;
 }
 
 export interface HourlyPeoplePoint {
@@ -117,9 +122,11 @@ export interface CounterStaffHourlyPoint {
   label: string;
   staffedSeconds: number;
   unstaffedSeconds: number;
+  staffedPct: number;
+  unstaffedPct: number;
 }
 
-/** Counter staffing: staffed vs unstaffed segment time per hour (aggregated or one day). */
+/** Counter staffing: staffed vs unstaffed per hour (aggregated or one day). */
 export function getCounterStaffingHourly(
   dayKey: OverviewDayKey,
 ): CounterStaffHourlyPoint[] {
@@ -129,6 +136,8 @@ export function getCounterStaffingHourly(
       label: h.label,
       staffedSeconds: h.staffedSeconds,
       unstaffedSeconds: h.unstaffedSeconds,
+      staffedPct: h.staffedPct,
+      unstaffedPct: h.unstaffedPct,
     }));
   }
   const day = bundle.counterStaffing.perDay.find(
@@ -140,6 +149,8 @@ export function getCounterStaffingHourly(
     label: h.label,
     staffedSeconds: h.staffedSeconds,
     unstaffedSeconds: h.unstaffedSeconds,
+    staffedPct: h.staffedPct,
+    unstaffedPct: h.unstaffedPct,
   }));
 }
 
@@ -177,4 +188,116 @@ export function getCounterStaffingDaySummaries(): {
     unstaffedPct: s.unstaffedPct,
   };
   return { days, overall };
+}
+
+export interface DwellShareThresholdPoint {
+  seconds: number;
+  label: string;
+  pctOfPeople: number;
+}
+
+export interface CustomerDwellShareByPeople {
+  peopleCount: number;
+  sampleBasis: string;
+  scope: string;
+  cumulativePctAtMostSeconds: DwellShareThresholdPoint[];
+  pctAtLeastSeconds: DwellShareThresholdPoint[];
+}
+
+type ZoneEventsDay = (typeof bundle.zoneEvents.days)[number] & {
+  customerDwellShareByPeople?: CustomerDwellShareByPeople;
+};
+
+/** Dwell distribution by person (customer rows); per calendar day or period aggregate in `periodSummaries`. */
+export function getCustomerDwellShareByPeople(
+  dayKey: OverviewDayKey,
+): CustomerDwellShareByPeople | null {
+  if (dayKey === "overall") {
+    const ze = bundle.periodSummaries.last7Days.zoneEvents as {
+      customerDwellShareByPeople?: CustomerDwellShareByPeople;
+    };
+    return ze.customerDwellShareByPeople ?? null;
+  }
+  const day = bundle.zoneEvents.days.find(
+    (d) => d.referenceDate === dayKey,
+  ) as ZoneEventsDay | undefined;
+  return day?.customerDwellShareByPeople ?? null;
+}
+
+/** Full-period aggregates for the report page (`periodSummaries.last7Days`). */
+export interface ReportPeriodSummary {
+  meta: {
+    schemaVersion: string;
+    referenceDateRange: { start: string; end: string };
+    bundleDateSuffixes: string[];
+    generatedAtUtc: string;
+  };
+  period: {
+    windowDaysCap: number;
+    daysIncluded: number;
+    note: string;
+  };
+  counterStaffing: {
+    staffedSeconds: number;
+    unstaffedSeconds: number;
+    totalSegmentSeconds: number;
+    staffedPct: number;
+    unstaffedPct: number;
+  };
+  snapshots: {
+    dayCount: number;
+    sumTotalReadings: number;
+    avgDailyTotalReadings: number;
+    maxPeopleMaxAcrossDays: number;
+    avgPeopleMaxPerDay: number;
+    avgPeopleAvgExcludingZerosPerDay: number;
+    avgNonzeroReadingsPerDay: number;
+  };
+  zoneEvents: {
+    uniqueCustomersAcrossPeriod: number;
+    segmentCount: number;
+    dwellMin: number;
+    dwellMean: number;
+    dwellP50: number;
+    dwellP90: number;
+    dwellP95: number;
+    dwellMax: number;
+    dwellSharePeopleCount: number | null;
+    note: string | null;
+  };
+}
+
+export function getReportPeriodSummary(): ReportPeriodSummary | null {
+  const ps = bundle.periodSummaries?.last7Days;
+  if (!ps) return null;
+  const ze = ps.zoneEvents;
+  const dwell = ze.customerSegmentDwellSeconds;
+  const share = ze.customerDwellShareByPeople as { peopleCount?: number } | undefined;
+  return {
+    meta: {
+      schemaVersion: bundle.meta.schemaVersion,
+      referenceDateRange: bundle.meta.referenceDateRange,
+      bundleDateSuffixes: bundle.meta.bundleDateSuffixes,
+      generatedAtUtc: bundle.meta.generatedAtUtc,
+    },
+    period: {
+      windowDaysCap: ps.windowDaysCap,
+      daysIncluded: ps.daysIncluded,
+      note: ps.note,
+    },
+    counterStaffing: { ...ps.counterStaffing.summary },
+    snapshots: { ...ps.snapshots.aggregateAcrossDays },
+    zoneEvents: {
+      uniqueCustomersAcrossPeriod: ze.uniqueCustomersAcrossPeriod,
+      segmentCount: dwell.segmentCount,
+      dwellMin: dwell.min,
+      dwellMean: dwell.mean,
+      dwellP50: dwell.p50,
+      dwellP90: dwell.p90,
+      dwellP95: dwell.p95,
+      dwellMax: dwell.max,
+      dwellSharePeopleCount: share?.peopleCount ?? null,
+      note: "note" in ze ? (ze as { note?: string }).note ?? null : null,
+    },
+  };
 }

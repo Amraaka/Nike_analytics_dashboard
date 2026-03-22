@@ -12,9 +12,6 @@ export function CounterStaffingDaysSummary() {
     <Card>
       <CardHeader>
         <CardTitle>Өдрөөр: касс хүнтэй / хүнгүй</CardTitle>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Сегментийн нийлбэр — өдөр тус бүр болон бүх хугацааны нийлбэр
-        </p>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto rounded-md border border-slate-200 dark:border-slate-700">
@@ -31,7 +28,7 @@ export function CounterStaffingDaysSummary() {
                   Хүнгүй
                 </th>
                 <th className="px-3 py-2 font-semibold text-slate-700 dark:text-slate-200">
-                  Нийт сегмент
+                  Нийт цаг
                 </th>
                 <th className="px-3 py-2 font-semibold text-slate-700 dark:text-slate-200">
                   Хүнтэй %

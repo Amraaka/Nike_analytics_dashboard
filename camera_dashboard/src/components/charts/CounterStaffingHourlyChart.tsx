@@ -19,9 +19,14 @@ import {
   getOverviewDayOptions,
   type OverviewDayKey,
 } from "@/lib/analyticsBundle";
-import { formatDurationHuman } from "@/lib/utils";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+/** Short x-axis label so each slot is one calendar hour (avoids Chart.js category quirks). */
+function hourSlotLabel(hour: number): string {
+  const h = String(hour).padStart(2, "0");
+  return `${h}:00`;
+}
 
 export function CounterStaffingHourlyChart() {
   const dayOptions = useMemo(() => getOverviewDayOptions(), []);
@@ -31,21 +36,21 @@ export function CounterStaffingHourlyChart() {
 
   const data = useMemo(
     () => ({
-      labels: hourly.map((h) => h.label),
+      labels: hourly.map((row) => hourSlotLabel(row.hour)),
       datasets: [
         {
           label: "Хүнтэй (касс)",
-          data: hourly.map((h) => h.staffedSeconds),
-          backgroundColor: "rgba(16, 185, 129, 0.85)",
+          data: hourly.map((h) => h.staffedPct),
+          backgroundColor: "rgba(16, 185, 129, 0.88)",
           borderRadius: 4,
-          stack: "seg",
+          stack: "pct",
         },
         {
           label: "Хүнгүй (касс)",
-          data: hourly.map((h) => h.unstaffedSeconds),
-          backgroundColor: "rgba(148, 163, 184, 0.85)",
+          data: hourly.map((h) => h.unstaffedPct),
+          backgroundColor: "rgba(148, 163, 184, 0.88)",
           borderRadius: 4,
-          stack: "seg",
+          stack: "pct",
         },
       ],
     }),
@@ -67,45 +72,55 @@ export function CounterStaffingHourlyChart() {
         display: false,
       },
       tooltip: {
+        enabled: true,
+        mode: "index" as const,
+        intersect: false,
         callbacks: {
+          title: function (items: TooltipItem<"bar">[]) {
+            const idx = items[0]?.dataIndex;
+            if (idx === undefined || !hourly[idx]) return "";
+            const row = hourly[idx];
+            return `${hourSlotLabel(row.hour)} · ${row.label}`;
+          },
           label: function (ctx: TooltipItem<"bar">) {
             const v = ctx.parsed.y;
             if (v == null) return "";
-            return `${ctx.dataset.label ?? ""}: ${formatDurationHuman(v)}`;
-          },
-          footer: function (items: TooltipItem<"bar">[]) {
-            const sum = items.reduce(
-              (acc, i) =>
-                acc + (typeof i.parsed.y === "number" ? i.parsed.y : 0),
-              0,
-            );
-            return `Нийт: ${formatDurationHuman(sum)}`;
+            const pct = Number(v);
+            return `${ctx.dataset.label ?? ""}: ${pct.toFixed(1)}%`;
           },
         },
       },
     },
+    datasets: {
+      bar: {
+        categoryPercentage: 0.75,
+        barPercentage: 0.9,
+      },
+    },
     scales: {
       x: {
-        stacked: true,
+        stacked: false,
+        offset: true,
         ticks: {
           maxRotation: 45,
-          minRotation: 45,
+          minRotation: 0,
         },
         title: {
           display: true,
-          text: "Цагийн интервал",
+          text: "Цаг (эхлэл)",
         },
       },
       y: {
         stacked: true,
-        beginAtZero: true,
+        min: 0,
+        max: 100,
         title: {
           display: true,
-          text: "Сегментийн хугацаа (сек)",
+          text: "Сегментийн хувь (%)",
         },
         ticks: {
           callback: function (value: string | number) {
-            return formatDurationHuman(Number(value));
+            return `${Number(value)}%`;
           },
         },
       },
@@ -116,10 +131,7 @@ export function CounterStaffingHourlyChart() {
     <Card>
       <CardHeader className="flex flex-col gap-4 space-y-0 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <CardTitle>Цагийн касс: хүнтэй / хүнгүй</CardTitle>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Сегментийн нийлбэр хугацаа (цаг бүрт) — нэмэлт хугацаа
-          </p>
+          <CardTitle>Цаг тутам: хүнтэй / хүнгүй</CardTitle>
         </div>
         <Tabs
           value={dayKey}
