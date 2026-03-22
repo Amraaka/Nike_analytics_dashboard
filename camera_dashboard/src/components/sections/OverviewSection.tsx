@@ -60,7 +60,7 @@ export function OverviewSection() {
             icon={Activity}
             iconColor="text-purple-600 dark:text-purple-400"
             iconBgColor="bg-purple-100 dark:bg-purple-900/20"
-            subtitle={`Снапшот: ${kpis.peakHourLabel} (цагийн хамгийн их)`}
+            subtitle={` ${kpis.peakHourLabel} `}
           />
           <StatCard
             title="Дундаж үйлчлүүлсэн хугацаа"
@@ -68,18 +68,18 @@ export function OverviewSection() {
             icon={Clock}
             iconColor="text-amber-600 dark:text-amber-400"
             iconBgColor="bg-amber-100 dark:bg-amber-900/20"
-            subtitle="Сегментийн дундаж (zone events)"
+            subtitle="Өдрийн дундаж"
           />
           <StatCard
-            title="Танхимд байгаа хүмүүс"
+            title="Танхимд илэрсэн "
             value={kpis.storeHallUniqueVisitors}
             icon={Users}
             iconColor="text-blue-600 dark:text-blue-400"
             iconBgColor="bg-blue-100 dark:bg-blue-900/20"
             subtitle={
               dayKey === "overall"
-                ? "Дэлгүүр танхим — өдрийн дундаж (давхцуулахгүй/өдөр)"
-                : "Дэлгүүр танхим — өдрийн давхцуулахгүй"
+                ? "хүмүүсийн тоо"
+                : "хүмүүсийн тоо"
             }
           />
           <StatCard
@@ -88,7 +88,7 @@ export function OverviewSection() {
             icon={UserCheck}
             iconColor="text-emerald-600 dark:text-emerald-400"
             iconBgColor="bg-emerald-100 dark:bg-emerald-900/20"
-            subtitle="Counter staffing (сегментийн хувь)"
+            subtitle="Өдрийн дундаж"
           />
         </div>
       </div>
@@ -98,13 +98,7 @@ export function OverviewSection() {
         <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">
           Харилцагчдын идэвхтэй цаг
         </h2>
-        <p className="mb-3 text-sm text-slate-500 dark:text-slate-400">
-          Снапшот CSV-аас: цаг бүрт хамгийн их хүний тоо
-          {dayKey === "overall"
-            ? " (өдөр бүрийн ижил цагийн дээд утгуудын дээд). "
-            : ". "}
-          Үзүүлэлт: харилцагчдын идэвхтэй цагийг илэрхийлнэ.
-        </p>
+       
         <CustomerFlowChart hourlySnapshotPoints={hourlyChartPoints} />
       </div>
     </div>

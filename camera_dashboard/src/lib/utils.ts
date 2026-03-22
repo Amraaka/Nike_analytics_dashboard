@@ -17,6 +17,17 @@ export function formatTimeShort(seconds: number): string {
   return `${minutes}m`;
 }
 
+/** Long durations (e.g. counter segment seconds) — Mongolian-style units. */
+export function formatDurationHuman(seconds: number): string {
+  const s = Math.max(0, Math.round(seconds));
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  if (h > 0) return `${h}ц ${m}м`;
+  if (m > 0) return `${m}м ${sec}с`;
+  return `${sec}с`;
+}
+
 export function formatPercentage(value: number): string {
   return `${Math.round(value)}%`;
 }

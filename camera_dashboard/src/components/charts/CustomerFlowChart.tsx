@@ -56,7 +56,7 @@ export function CustomerFlowChart({ hourlySnapshotPoints }: CustomerFlowChartPro
       ? {
           labels: hourlySnapshotPoints.map((p) => p.label),
           counts: hourlySnapshotPoints.map((p) => p.count),
-          datasetLabel: 'Цагийн дээд (хүн)',
+          datasetLabel: 'Үйлчлүүлэгч  ',
         }
       : {
           labels: customerFlow.map((cf) => formatLabel(cf.timestamp)),
@@ -101,7 +101,7 @@ export function CustomerFlowChart({ hourlySnapshotPoints }: CustomerFlowChartPro
         title: {
           display: true,
           text: hourlySnapshotPoints
-            ? 'Снапшот: цаг бүрийн хамгийн их хүн'
+            ? 'Харилцагчийн тоо'
             : 'Харилцагчийн тоо',
         },
       },

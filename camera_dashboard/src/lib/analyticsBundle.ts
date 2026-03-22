@@ -111,3 +111,70 @@ export function getOverviewKpis(dayKey: OverviewDayKey): OverviewKpis {
     referenceNote: dayKey,
   };
 }
+
+export interface CounterStaffHourlyPoint {
+  hour: number;
+  label: string;
+  staffedSeconds: number;
+  unstaffedSeconds: number;
+}
+
+/** Counter staffing: staffed vs unstaffed segment time per hour (aggregated or one day). */
+export function getCounterStaffingHourly(
+  dayKey: OverviewDayKey,
+): CounterStaffHourlyPoint[] {
+  if (dayKey === "overall") {
+    return bundle.counterStaffing.hourly.map((h) => ({
+      hour: h.hour,
+      label: h.label,
+      staffedSeconds: h.staffedSeconds,
+      unstaffedSeconds: h.unstaffedSeconds,
+    }));
+  }
+  const day = bundle.counterStaffing.perDay.find(
+    (d) => d.referenceDate === dayKey,
+  );
+  if (!day) return [];
+  return day.hourly.map((h) => ({
+    hour: h.hour,
+    label: h.label,
+    staffedSeconds: h.staffedSeconds,
+    unstaffedSeconds: h.unstaffedSeconds,
+  }));
+}
+
+export interface CounterStaffingDaySummaryRow {
+  referenceDate: string;
+  label: string;
+  staffedSeconds: number;
+  unstaffedSeconds: number;
+  totalSegmentSeconds: number;
+  staffedPct: number;
+  unstaffedPct: number;
+}
+
+export function getCounterStaffingDaySummaries(): {
+  days: CounterStaffingDaySummaryRow[];
+  overall: CounterStaffingDaySummaryRow;
+} {
+  const days = bundle.counterStaffing.perDay.map((d) => ({
+    referenceDate: d.referenceDate,
+    label: formatDayTabLabel(d.referenceDate),
+    staffedSeconds: d.summary.staffedSeconds,
+    unstaffedSeconds: d.summary.unstaffedSeconds,
+    totalSegmentSeconds: d.summary.totalSegmentSeconds,
+    staffedPct: d.summary.staffedPct,
+    unstaffedPct: d.summary.unstaffedPct,
+  }));
+  const s = bundle.counterStaffing.summary;
+  const overall: CounterStaffingDaySummaryRow = {
+    referenceDate: "",
+    label: "Нийт (бүх өдөр)",
+    staffedSeconds: s.staffedSeconds,
+    unstaffedSeconds: s.unstaffedSeconds,
+    totalSegmentSeconds: s.totalSegmentSeconds,
+    staffedPct: s.staffedPct,
+    unstaffedPct: s.unstaffedPct,
+  };
+  return { days, overall };
+}
